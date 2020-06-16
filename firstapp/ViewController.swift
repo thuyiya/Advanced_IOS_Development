@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet var cardButtons: [UIButton]! // Array<UIButton>! Array is genaric class
     //COMAND KEY + variable for rename method or variable
     
-    var emojiChoecies: Array<String> = ["😈", "😈", "😑", "😑"]
+    var emojiChoecies: Array<String> = ["1", "2", "3", "4"]
     
     @IBAction func touchCard(_ sender: UIButton) { //_ under bar no argument
         flipCount += 1
@@ -40,8 +40,11 @@ class ViewController: UIViewController {
             button.setTitle("", for: .normal)
             button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
         } else {
-            button.setTitle(emoji, for: .normal)
+//            button.setTitle(emoji, for: .normal)
             button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            button.setImage(UIImage(named: emoji)?.withRenderingMode(.alwaysOriginal), for: .normal)
+            button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            button.imageView?.contentMode = .scaleAspectFit
         }
     }
 }
