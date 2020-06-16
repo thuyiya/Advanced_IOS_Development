@@ -7,3 +7,20 @@
 //
 
 import Foundation
+
+struct Card { //no inheritance, value type
+    var isFaceUp = false
+    var isMatched = false
+    var identifier: Int
+    
+    static var identifierFactory = 0
+    
+    static func getUniqeIdentifier() -> Int {
+        identifierFactory += 1
+        return Card.identifierFactory
+    }
+    
+    init() {
+        self.identifier = Card.getUniqeIdentifier()
+    }
+}
