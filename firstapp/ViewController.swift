@@ -22,8 +22,6 @@ class ViewController: UIViewController {
     @IBOutlet var cardButtons: [UIButton]! // Array<UIButton>! Array is genaric class
     //COMAND KEY + variable for rename method or variable
     
-    var emojiChoecies: Array<String> = ["1", "2", "3", "4"]
-    
     @IBAction func touchCard(_ sender: UIButton) { //_ under bar no argument
         flipCount += 1
         if let cardNumber = cardButtons.lastIndex(of: sender) {
@@ -45,13 +43,14 @@ class ViewController: UIViewController {
             
             if(card.isFaceUp) {
                 button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                button.setTitle(actor(for: card), for: .normal)
-//                button.setImage(UIImage(named: actor(for: card))?.withRenderingMode(.alwaysOriginal), for: .normal)
-//                button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-//                button.imageView?.contentMode = .scaleAspectFit
+//                button.setTitle(actor(for: card), for: .normal)
+                button.setImage(UIImage(named: actor(for: card))?.withRenderingMode(.alwaysOriginal), for: .normal)
+                button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+                button.imageView?.contentMode = .scaleAspectFit
             } else {
                 button.setTitle("", for: .normal)
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                button.setImage(nil, for: .normal)
             }
         }
     }
@@ -71,8 +70,24 @@ class ViewController: UIViewController {
         }
     }
     
+    var emojiChoecies: Array<String> = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    
+//    var characters = Dictionary<Int, String>()
+    var characters = [Int:String]()
+    
     func actor(for card: Card) -> String {
-        return "?"
+//        if characters[card.identifier] != nil {
+//         return characters[card.identifier]!
+//        } else {
+//            return "?"
+//        }
+        
+        if characters[card.identifier] == nil, emojiChoecies.count > 0 {
+            let randomIndex = Int(arc4random_uniform(UInt32(emojiChoecies.count)))
+                characters[card.identifier] = emojiChoecies.remove(at: randomIndex)
+        }
+        
+        return characters[card.identifier] ?? "?"
     }
 }
 
