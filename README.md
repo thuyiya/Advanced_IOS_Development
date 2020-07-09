@@ -15,6 +15,7 @@ Hi Students, This repo will help you to create and understand how to develop app
 
  1. [Flip Card - "Concentration game with mvc patten"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/01_Proj_FlipCard)
  2. [Login & Registration - "Auto Layout & Constraints skill improvement"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/02_Proj_AuthScreen)
+ 3. [Swift - "Improve Language Skills"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/03_Proj_SwiftSkill)
 
 
 # AID Course content
