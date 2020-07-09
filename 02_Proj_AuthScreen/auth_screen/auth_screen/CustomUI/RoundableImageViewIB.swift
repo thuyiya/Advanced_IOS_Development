@@ -1,5 +1,5 @@
 //
-//  RoundableImageView.swift
+//  RoundableImageViewIB.swift
 //  auth_screen
 //
 //  Created by Thusitha Jayalath on 7/9/20.
@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class RoundableImageView: UIImageView {
+class RoundableImageViewIB: UIImageView {
 
     @IBInspectable var cornerRadius : CGFloat = 0.0{
         didSet{
