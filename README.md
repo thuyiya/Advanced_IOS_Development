@@ -2,7 +2,7 @@
 # Welcome to IOS Development!
 ### Sample application FlipCard
 
-Hi Students, Generally **FlipCard** app is created for understand how to develop application using **Xcode** and swift language. If you want to learn about more in IOS Development This will be suit for you.
+Hi Students, This repo will help you to create and understand how to develop application using **Xcode** and swift language. If you want to learn about more in IOS Development This will be suit for you.
 
 
 # Requirement
