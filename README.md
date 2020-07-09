@@ -11,12 +11,6 @@ Hi Students, This repo will help you to create and understand how to develop app
 - Xcode 10.3 or above
 - Basic programming knowledge
 
-## Swift API Guidelines
-
-For mode details follow the given link below
-
-[Guidelines >](https://swift.org/documentation/api-design-guidelines/)
-
 ## Projects
 
  1. [Flip Card - "Concentration game with mvc patten"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/01_Proj_FlipCard)
