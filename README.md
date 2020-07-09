@@ -68,10 +68,10 @@ IOS Introduction
 7. What is apple developer page, what can we do?
 8. Production build
 
-#What is new?
+# What is new?
 - Xcode 11 2. SwiftUI
 - Xcode 12 Beta
-#Reference
+# Reference
 - **Essential Reading**
   Keur, C. and Hillegass, A. (2015) iOS Programming: The Big Nerd Ranch Guide. Fifth edition. Atlanta, GA: Big Nerd Ranch
 - **Recommended Reading**
