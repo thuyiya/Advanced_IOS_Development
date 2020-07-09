@@ -17,6 +17,11 @@ For mode details follow the given link below
 
 [Guidelines >](https://swift.org/documentation/api-design-guidelines/)
 
+## Projects
+
+ 1. [Flip Card - "Concentration game with mvc patten"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/01_Proj_FlipCard)
+ 2. [Login & Registration - "Auto Layout & Constraints skill improvement"](https://github.com/thuyiya/Advanced_IOS_Development/tree/master/02_Proj_AuthScreen)
+
 ## Summery for swift
 
 The Basics
