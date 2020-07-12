@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FFD505E24BAC1F6009E89A9 /* EXAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD505D24BAC1F6009E89A9 /* EXAuthViewController.swift */; };
 		E8D2F52324B711D600B55295 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2F52224B711D600B55295 /* AppDelegate.swift */; };
 		E8D2F52524B711D600B55295 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2F52424B711D600B55295 /* SceneDelegate.swift */; };
-		E8D2F52724B711D600B55295 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2F52624B711D600B55295 /* ViewController.swift */; };
+		E8D2F52724B711D600B55295 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2F52624B711D600B55295 /* AuthViewController.swift */; };
 		E8D2F52A24B711D600B55295 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D2F52824B711D600B55295 /* Main.storyboard */; };
 		E8D2F52C24B711D900B55295 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8D2F52B24B711D900B55295 /* Assets.xcassets */; };
 		E8D2F52F24B711D900B55295 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D2F52D24B711D900B55295 /* LaunchScreen.storyboard */; };
@@ -22,10 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FFD505D24BAC1F6009E89A9 /* EXAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXAuthViewController.swift; sourceTree = "<group>"; };
 		E8D2F51F24B711D600B55295 /* auth_screen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auth_screen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D2F52224B711D600B55295 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8D2F52424B711D600B55295 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E8D2F52624B711D600B55295 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E8D2F52624B711D600B55295 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		E8D2F52924B711D600B55295 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8D2F52B24B711D900B55295 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8D2F52E24B711D900B55295 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FFD505C24BAC1CE009E89A9 /* AS */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD505D24BAC1F6009E89A9 /* EXAuthViewController.swift */,
+			);
+			path = AS;
+			sourceTree = "<group>";
+		};
 		E8D2F51624B711D600B55295 = {
 			isa = PBXGroup;
 			children = (
@@ -69,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				E8D2F52224B711D600B55295 /* AppDelegate.swift */,
-				E8D2F52624B711D600B55295 /* ViewController.swift */,
+				E8D2F52624B711D600B55295 /* AuthViewController.swift */,
 				E8D2F53D24B7138B00B55295 /* SupportFiles */,
 				E8D2F53C24B7136B00B55295 /* CustomUI */,
 				E8D2F54224B7159900B55295 /* Extensions */,
@@ -104,6 +114,7 @@
 		E8D2F54224B7159900B55295 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1FFD505C24BAC1CE009E89A9 /* AS */,
 				E8D2F54324B715B100B55295 /* UI */,
 			);
 			path = Extensions;
@@ -189,8 +200,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8D2F53924B712E200B55295 /* Constants.swift in Sources */,
-				E8D2F52724B711D600B55295 /* ViewController.swift in Sources */,
+				E8D2F52724B711D600B55295 /* AuthViewController.swift in Sources */,
 				E8D2F54124B7157200B55295 /* ASExtentions.swift in Sources */,
+				1FFD505E24BAC1F6009E89A9 /* EXAuthViewController.swift in Sources */,
 				E8D2F53F24B7146B00B55295 /* RoundableImageViewIB.swift in Sources */,
 				E8D2F53724B7129800B55295 /* ASButton.swift in Sources */,
 				E8D2F53B24B7132100B55295 /* ASTextField.swift in Sources */,

@@ -1,30 +1,14 @@
 //
-//  ViewController.swift
+//  EXAuthViewController.swift
 //  auth_screen
 //
-//  Created by Thusitha Jayalath on 7/9/20.
+//  Created by thusitha on 7/12/20.
 //  Copyright © 2020 Thusitha Jayalath. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    let backgroundImageView = UIImageView()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        /**
-          To Create Rounded Image, You can take refereance of image and make it rounded when its load
-         */
-        
-        //        circularImage.layer.masksToBounds = true
-        //        circularImage.layer.cornerRadius = circularImage.bounds.width / 2
-        
-        setBackground()
-    }
+extension AuthViewController {
     
     func setBackground() {
         view.addSubview(backgroundImageView)
@@ -38,5 +22,5 @@ class ViewController: UIViewController {
         
         view.sendSubviewToBack(backgroundImageView)
     }
-}
 
+}
