@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		1FFD506C24BAD0F5009E89A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD506B24BAD0F5009E89A9 /* AppDelegate.swift */; };
 		1FFD506E24BAD0F5009E89A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD506D24BAD0F5009E89A9 /* SceneDelegate.swift */; };
-		1FFD507024BAD0F5009E89A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD506F24BAD0F5009E89A9 /* ViewController.swift */; };
 		1FFD507324BAD0F5009E89A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD507124BAD0F5009E89A9 /* Main.storyboard */; };
 		1FFD507524BAD0FA009E89A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD507424BAD0FA009E89A9 /* Assets.xcassets */; };
 		1FFD507824BAD0FA009E89A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD507624BAD0FA009E89A9 /* LaunchScreen.storyboard */; };
+		1FFD508024BAD2B2009E89A9 /* CountriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD507F24BAD2B2009E89A9 /* CountriesTableViewController.swift */; };
+		1FFD508224BAD3D4009E89A9 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD508124BAD3D4009E89A9 /* Country.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1FFD506824BAD0F5009E89A9 /* fancytableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fancytableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FFD506B24BAD0F5009E89A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FFD506D24BAD0F5009E89A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1FFD506F24BAD0F5009E89A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1FFD507224BAD0F5009E89A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1FFD507424BAD0FA009E89A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FFD507724BAD0FA009E89A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FFD507924BAD0FA009E89A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FFD507F24BAD2B2009E89A9 /* CountriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesTableViewController.swift; sourceTree = "<group>"; };
+		1FFD508124BAD3D4009E89A9 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 			children = (
 				1FFD506B24BAD0F5009E89A9 /* AppDelegate.swift */,
 				1FFD506D24BAD0F5009E89A9 /* SceneDelegate.swift */,
-				1FFD506F24BAD0F5009E89A9 /* ViewController.swift */,
 				1FFD507124BAD0F5009E89A9 /* Main.storyboard */,
 				1FFD507424BAD0FA009E89A9 /* Assets.xcassets */,
 				1FFD507624BAD0FA009E89A9 /* LaunchScreen.storyboard */,
 				1FFD507924BAD0FA009E89A9 /* Info.plist */,
+				1FFD507F24BAD2B2009E89A9 /* CountriesTableViewController.swift */,
+				1FFD508124BAD3D4009E89A9 /* Country.swift */,
 			);
 			path = fancytableView;
 			sourceTree = "<group>";
@@ -138,7 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FFD507024BAD0F5009E89A9 /* ViewController.swift in Sources */,
+				1FFD508224BAD3D4009E89A9 /* Country.swift in Sources */,
+				1FFD508024BAD2B2009E89A9 /* CountriesTableViewController.swift in Sources */,
 				1FFD506C24BAD0F5009E89A9 /* AppDelegate.swift in Sources */,
 				1FFD506E24BAD0F5009E89A9 /* SceneDelegate.swift in Sources */,
 			);
