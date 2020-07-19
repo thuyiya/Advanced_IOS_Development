@@ -19,6 +19,8 @@
 		1F8B3E5424C42E8900EB8196 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8B3E5224C42E8900EB8196 /* CustomTableViewCell.xib */; };
 		1F8B3E5624C4357200EB8196 /* MyCityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8B3E5524C4357200EB8196 /* MyCityTableViewController.swift */; };
 		1F8B3E5824C43C0C00EB8196 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8B3E5724C43C0C00EB8196 /* CityTableViewCell.swift */; };
+		1F8B3E5B24C4447C00EB8196 /* CustomCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8B3E5924C4447C00EB8196 /* CustomCityTableViewCell.swift */; };
+		1F8B3E5C24C4447C00EB8196 /* CustomCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8B3E5A24C4447C00EB8196 /* CustomCityTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		1F8B3E5224C42E8900EB8196 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		1F8B3E5524C4357200EB8196 /* MyCityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCityTableViewController.swift; sourceTree = "<group>"; };
 		1F8B3E5724C43C0C00EB8196 /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		1F8B3E5924C4447C00EB8196 /* CustomCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCityTableViewCell.swift; sourceTree = "<group>"; };
+		1F8B3E5A24C4447C00EB8196 /* CustomCityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCityTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 				1F8B3E5224C42E8900EB8196 /* CustomTableViewCell.xib */,
 				1F8B3E5524C4357200EB8196 /* MyCityTableViewController.swift */,
 				1F8B3E5724C43C0C00EB8196 /* CityTableViewCell.swift */,
+				1F8B3E5924C4447C00EB8196 /* CustomCityTableViewCell.swift */,
+				1F8B3E5A24C4447C00EB8196 /* CustomCityTableViewCell.xib */,
 			);
 			path = airbnb;
 			sourceTree = "<group>";
@@ -145,6 +151,7 @@
 			files = (
 				1F8B3E4624C3FE6900EB8196 /* LaunchScreen.storyboard in Resources */,
 				1F8B3E4324C3FE6900EB8196 /* Assets.xcassets in Resources */,
+				1F8B3E5C24C4447C00EB8196 /* CustomCityTableViewCell.xib in Resources */,
 				1F8B3E5424C42E8900EB8196 /* CustomTableViewCell.xib in Resources */,
 				1F8B3E4124C3FE6700EB8196 /* Main.storyboard in Resources */,
 			);
@@ -157,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F8B3E5B24C4447C00EB8196 /* CustomCityTableViewCell.swift in Sources */,
 				1F8B3E5324C42E8900EB8196 /* CustomTableViewCell.swift in Sources */,
 				1F8B3E4E24C42BFC00EB8196 /* MyTableTableViewController.swift in Sources */,
 				1F8B3E3E24C3FE6700EB8196 /* ViewController.swift in Sources */,

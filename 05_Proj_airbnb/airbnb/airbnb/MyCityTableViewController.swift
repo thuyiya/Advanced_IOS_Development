@@ -22,6 +22,12 @@ class MyCityTableViewController: UITableViewController {
         City(name: "Kgalle", isoCode: "at"),
     ]
     
+    override func viewDidLoad() {
+            //        NewCustomCityCell
+        let newXib = UINib(nibName: "CustomCityTableViewCell", bundle: nil)
+        tableView.register(newXib, forCellReuseIdentifier: "NewCustomCityCell")
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -32,9 +38,9 @@ class MyCityTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CityCellX", for: indexPath) as! CityTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewCustomCityCell", for: indexPath) as! CustomCityTableViewCell
         cell.cityNameLbl.text = cityList[indexPath.row].name
-        cell.codeNameLbl.text = cityList[indexPath.row].isoCode
+        cell.cityCodeLbl.text = cityList[indexPath.row].isoCode
         return cell
     }
     
