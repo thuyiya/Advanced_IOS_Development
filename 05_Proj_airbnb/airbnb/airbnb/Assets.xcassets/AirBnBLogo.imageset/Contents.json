@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "kisspng-portable-network-graphics-logo-airbnb-computer-ico-velvetamsterdam-com-visit-us-5bfa3d3c561578.1136759515431263323526.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "kisspng-portable-network-graphics-logo-airbnb-computer-ico-velvetamsterdam-com-visit-us-5bfa3d3c561578.1136759515431263323526-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "kisspng-portable-network-graphics-logo-airbnb-computer-ico-velvetamsterdam-com-visit-us-5bfa3d3c561578.1136759515431263323526-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
