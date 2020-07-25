@@ -9,10 +9,19 @@
 import UIKit
 
 class NameViewController: UIViewController {
+    
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
 
+    var fullName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let fullName = self.fullName {
+            let firstLast = fullName.components(separatedBy: " ")
+            firstNameTextField.text = firstLast[0]
+            lastNameTextField.text = firstLast[1]
+        }
         // Do any additional setup after loading the view.
     }
     
