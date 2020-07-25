@@ -22,7 +22,28 @@ class ViewController: UIViewController, UITableViewDataSource  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let logo = UIImage(named: "Logo")
+        let imageView = UIImageView(image:logo)
+        imageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = imageView
+        navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "#95a5a6")
+        
+        if let navigationBar = navigationController?.navigationBar {
+            
+            navigationBar.tintColor = UIColor(red: 1.0, green: 0.25, blue: 0.25, alpha: 0.8)
+
+            let shadow = NSShadow()
+            shadow.shadowColor = UIColor.gray.withAlphaComponent(0.5)
+            shadow.shadowOffset = CGSize(width: 2, height: 2)
+            shadow.shadowBlurRadius = 4
+            navigationBar.titleTextAttributes = [
+                NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 22),
+                NSAttributedString.Key.foregroundColor : UIColor(red: 0.5, green: 0.15, blue: 0.15, alpha: 0.8),
+                NSAttributedString.Key.shadow : shadow
+            ]
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,6 +77,28 @@ class ViewController: UIViewController, UITableViewDataSource  {
             tblViewUsers.reloadRows(at: [indexPath], with: .automatic)
             selectedIndexPath = nil
         }
+    }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
 
 }
