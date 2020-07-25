@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>getzonein.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>bitcode</key>
+			<false/>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>0D5B59777B5C6C62A7889D5DFB7B946CE14F8B8A</string>
+				<key>dateExpires</key>
+				<string>10/26/20</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>9MSP46PSW9.com.getzonein.zonein</string>
+				<key>aps-environment</key>
+				<string>production</string>
+				<key>beta-reports-active</key>
+				<true/>
+				<key>com.apple.developer.team-identifier</key>
+				<string>9MSP46PSW9</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>getzonein.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>ccd8bfc0-3947-448e-a441-0af5bf7e198b</string>
+				<key>name</key>
+				<string>ZoneIn_Appstore_Prov_Profile</string>
+			</dict>
+			<key>symbols</key>
+			<false/>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>9MSP46PSW9</string>
+				<key>name</key>
+				<string>ZoneU, LLC</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
