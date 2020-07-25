@@ -8,24 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		1F32E83424CC79E0009380D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E83324CC79E0009380D8 /* AppDelegate.swift */; };
-		1F32E83624CC79E0009380D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E83524CC79E0009380D8 /* SceneDelegate.swift */; };
 		1F32E83824CC79E0009380D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E83724CC79E0009380D8 /* ViewController.swift */; };
 		1F32E83B24CC79E0009380D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E83924CC79E0009380D8 /* Main.storyboard */; };
 		1F32E83D24CC79E6009380D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E83C24CC79E6009380D8 /* Assets.xcassets */; };
 		1F32E84024CC79E6009380D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E83E24CC79E6009380D8 /* LaunchScreen.storyboard */; };
 		1F32E84824CC8433009380D8 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E84724CC8433009380D8 /* NameViewController.swift */; };
+		1F32E84A24CC8C53009380D8 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E84924CC8C53009380D8 /* CustomViewController.swift */; };
+		1F32E84D24CC8E77009380D8 /* CustomNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E84B24CC8E77009380D8 /* CustomNameViewController.swift */; };
+		1F32E84E24CC8E77009380D8 /* CustomNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E84C24CC8E77009380D8 /* CustomNameViewController.xib */; };
+		1F32E85024CC9A8E009380D8 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E84F24CC9A8E009380D8 /* Settings.storyboard */; };
+		1F32E85224CC9AF7009380D8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E85124CC9AF7009380D8 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F32E83024CC79E0009380D8 /* navigationsystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = navigationsystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F32E83324CC79E0009380D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1F32E83524CC79E0009380D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1F32E83724CC79E0009380D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1F32E83A24CC79E0009380D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1F32E83C24CC79E6009380D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F32E83F24CC79E6009380D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F32E84124CC79E6009380D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F32E84724CC8433009380D8 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
+		1F32E84924CC8C53009380D8 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		1F32E84B24CC8E77009380D8 /* CustomNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNameViewController.swift; sourceTree = "<group>"; };
+		1F32E84C24CC8E77009380D8 /* CustomNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomNameViewController.xib; sourceTree = "<group>"; };
+		1F32E84F24CC9A8E009380D8 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		1F32E85124CC9AF7009380D8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,13 +67,17 @@
 			isa = PBXGroup;
 			children = (
 				1F32E83324CC79E0009380D8 /* AppDelegate.swift */,
-				1F32E83524CC79E0009380D8 /* SceneDelegate.swift */,
 				1F32E83724CC79E0009380D8 /* ViewController.swift */,
 				1F32E83924CC79E0009380D8 /* Main.storyboard */,
 				1F32E83C24CC79E6009380D8 /* Assets.xcassets */,
 				1F32E83E24CC79E6009380D8 /* LaunchScreen.storyboard */,
 				1F32E84124CC79E6009380D8 /* Info.plist */,
 				1F32E84724CC8433009380D8 /* NameViewController.swift */,
+				1F32E84924CC8C53009380D8 /* CustomViewController.swift */,
+				1F32E84B24CC8E77009380D8 /* CustomNameViewController.swift */,
+				1F32E84C24CC8E77009380D8 /* CustomNameViewController.xib */,
+				1F32E84F24CC9A8E009380D8 /* Settings.storyboard */,
+				1F32E85124CC9AF7009380D8 /* SettingsViewController.swift */,
 			);
 			path = navigationsystem;
 			sourceTree = "<group>";
@@ -128,9 +140,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F32E84E24CC8E77009380D8 /* CustomNameViewController.xib in Resources */,
 				1F32E84024CC79E6009380D8 /* LaunchScreen.storyboard in Resources */,
 				1F32E83D24CC79E6009380D8 /* Assets.xcassets in Resources */,
 				1F32E83B24CC79E0009380D8 /* Main.storyboard in Resources */,
+				1F32E85024CC9A8E009380D8 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,9 +156,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F32E83824CC79E0009380D8 /* ViewController.swift in Sources */,
+				1F32E84D24CC8E77009380D8 /* CustomNameViewController.swift in Sources */,
 				1F32E83424CC79E0009380D8 /* AppDelegate.swift in Sources */,
-				1F32E83624CC79E0009380D8 /* SceneDelegate.swift in Sources */,
+				1F32E84A24CC8C53009380D8 /* CustomViewController.swift in Sources */,
 				1F32E84824CC8433009380D8 /* NameViewController.swift in Sources */,
+				1F32E85224CC9AF7009380D8 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -89,6 +89,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3G-SZ-92G">
+                                <rect key="frame" x="152" y="405" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <segue destination="D0e-0f-qXT" kind="show" id="CV5-j8-9kD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="yfd-7m-Mvy"/>
@@ -109,6 +117,16 @@
                 <exit id="0pA-uV-Kdk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1846" y="106"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="Mbq-W2-sy3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="D0e-0f-qXT" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Fdi-LL-IBn"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LH5-y0-FIN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2536" y="106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="huy-0i-01c">
