@@ -8,11 +8,17 @@
 
 import UIKit
 
-struct Course: Decodable {
-    let id: Int
+struct WebsiteDescription: Decodable {
     let name: String
-    let link: String
-    let imageUrl: String
+    let description: String
+    let courses: [Course]
+}
+
+struct Course: Decodable {
+    let id: Int?
+    let name: String?
+    let link: String?
+    let imageUrl: String?
     
     init(json: [String: Any]) {
         id = json["id"] as? Int ?? -1
@@ -28,7 +34,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let jsonUrlString = "https://api.letsbuildthatapp.com/jsondecodable/course"
+        let jsonUrlString = "https://api.letsbuildthatapp.com/jsondecodable/courses_missing_fields"
         guard let url = URL(string: jsonUrlString) else { return } //optional binding
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
@@ -45,8 +51,8 @@ class ViewController: UIViewController {
             
             do {
                 //swift 4 and above
-                let course = try JSONDecoder().decode(Course.self, from: data)
-                print(course.name)
+                let courses = try JSONDecoder().decode([Course].self, from: data)
+                print(courses)
                 
                 //Swift 2/3/ObjectC
 //                guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
@@ -67,3 +73,7 @@ class ViewController: UIViewController {
 
 }
 
+//1 course https://api.letsbuildthatapp.com/jsondecodable/course
+//2 course https://api.letsbuildthatapp.com/jsondecodable/courses
+//3 website_description https://api.letsbuildthatapp.com/jsondecodable/website_description
+//4 course missing https://api.letsbuildthatapp.com/jsondecodable/courses_missing_fields
