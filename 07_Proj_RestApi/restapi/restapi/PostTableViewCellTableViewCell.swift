@@ -1,5 +1,5 @@
 //
-//  PostTableViewCell.swift
+//  PostTableViewCellTableViewCell.swift
 //  restapi
 //
 //  Created by thusitha on 8/2/20.
@@ -8,13 +8,12 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
+class PostTableViewCellTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblTitle: UILabel!
+    
+    @IBOutlet weak var btnUserName: UIButton!
     @IBOutlet weak var lblBody: UILabel!
-    @IBOutlet weak var userName: UIButton!
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,5 +24,9 @@ class PostTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    
+    @IBAction func getAllPostByUser(_ sender: Any) {
+        
+    }
 }

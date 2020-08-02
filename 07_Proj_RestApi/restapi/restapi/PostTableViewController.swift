@@ -19,10 +19,21 @@ class PostTableViewController: UITableViewController {
     
     var allPosts = [Post]()
     
+    var posts = [Post]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.register(UINib(nibName: "PostTableViewCellTableViewCell", bundle: nil), forCellReuseIdentifier: "postcell")
+        
         getPosts()
+        
     }
     
     func getPosts () {
@@ -34,10 +45,7 @@ class PostTableViewController: UITableViewController {
             guard let data = data else { return }
             
             do {
-                let posts = try JSONDecoder().decode([Post].self, from: data)
-                
-                self.allPosts.append(Post(id: 1, userId: 1222, title: "title 1", body: "body 2"))
-                
+                self.posts = try JSONDecoder().decode([Post].self, from: data)
                 
                 
             } catch let jsonError {
@@ -59,15 +67,16 @@ class PostTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return allPosts.count
+        return posts.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postcell", for: indexPath) as! PostTableViewCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "postcell", for: indexPath) as! PostTableViewCellTableViewCell
+        
+        cell.lblTitle.text = "asasdas"
 
-        cell.lblTitle.text = allPosts[indexPath.row].title
-        cell.lblBody.text = allPosts[indexPath.row].body
 
         return cell
     }
