@@ -7,13 +7,6 @@ struct Course: Decodable {
     var imageUrl: String?
 }
 
-struct Post: Decodable {
-    var id: Int?
-    var userId: Int?
-    var title: String?
-    var body: String?
-}
-
 struct WebsiteDescription: Decodable {
     let name: String
     let description: String

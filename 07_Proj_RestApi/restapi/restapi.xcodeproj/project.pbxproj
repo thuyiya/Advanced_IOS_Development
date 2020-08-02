@@ -15,6 +15,8 @@
 		1F32E86C24CCA0A0009380D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F32E86A24CCA0A0009380D8 /* LaunchScreen.storyboard */; };
 		1F32E89C24CD74D1009380D8 /* RestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E89B24CD74D1009380D8 /* RestViewController.swift */; };
 		1FC8F04824D6729500C635D6 /* HttpClientApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8F04724D6729500C635D6 /* HttpClientApi.swift */; };
+		1FC8F04A24D6775600C635D6 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8F04924D6775600C635D6 /* PostTableViewController.swift */; };
+		1FC8F04C24D677B500C635D6 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8F04B24D677B400C635D6 /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		1F32E86D24CCA0A0009380D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F32E89B24CD74D1009380D8 /* RestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestViewController.swift; sourceTree = "<group>"; };
 		1FC8F04724D6729500C635D6 /* HttpClientApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientApi.swift; sourceTree = "<group>"; };
+		1FC8F04924D6775600C635D6 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		1FC8F04B24D677B400C635D6 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				1F32E86D24CCA0A0009380D8 /* Info.plist */,
 				1F32E89B24CD74D1009380D8 /* RestViewController.swift */,
 				1FC8F04724D6729500C635D6 /* HttpClientApi.swift */,
+				1FC8F04924D6775600C635D6 /* PostTableViewController.swift */,
+				1FC8F04B24D677B400C635D6 /* PostTableViewCell.swift */,
 			);
 			path = restapi;
 			sourceTree = "<group>";
@@ -144,7 +150,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FC8F04C24D677B500C635D6 /* PostTableViewCell.swift in Sources */,
 				1F32E89C24CD74D1009380D8 /* RestViewController.swift in Sources */,
+				1FC8F04A24D6775600C635D6 /* PostTableViewController.swift in Sources */,
 				1FC8F04824D6729500C635D6 /* HttpClientApi.swift in Sources */,
 				1F32E86424CCA09E009380D8 /* ViewController.swift in Sources */,
 				1F32E86024CCA09E009380D8 /* AppDelegate.swift in Sources */,
