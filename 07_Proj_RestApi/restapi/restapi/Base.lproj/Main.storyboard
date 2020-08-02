@@ -38,7 +38,7 @@
         <!--Create Post-->
         <scene sceneID="9Vn-TK-Dmj">
             <objects>
-                <viewController id="6xj-bW-ALZ" customClass="CreatePostViewController" customModule="restapi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createpost" id="6xj-bW-ALZ" customClass="CreatePostViewController" customModule="restapi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jSS-t6-W1B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

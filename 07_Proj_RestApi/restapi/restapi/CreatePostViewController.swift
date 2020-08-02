@@ -15,10 +15,16 @@ class CreatePostViewController: UIViewController {
     @IBOutlet weak var txtPostBody: UITextField!
     @IBOutlet weak var txtPostTitle: UITextField!
     
+    var postData: Post?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        if(postData != nil) {
+            txtUserId.text = "\(postData?.userId ?? 0)"
+            txtPostBody.text = postData?.body
+            txtPostTitle.text = postData?.title
+        }
     }
     
     

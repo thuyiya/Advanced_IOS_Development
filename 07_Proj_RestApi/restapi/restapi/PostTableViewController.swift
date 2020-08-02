@@ -90,6 +90,25 @@ class PostTableViewController: UITableViewController {
         self.navigationController?.pushViewController(vc, animated: true)
 //        self.present(vc, animated: true, completion: nil)
     }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
+            
+            let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let vc: CreatePostViewController = mainStoryboard.instantiateViewController(withIdentifier: "createpost") as! CreatePostViewController
+            
+            vc.postData = self.posts[indexPath.row]
+            
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
+        edit.backgroundColor = UIColor.green
+
+        return [edit]
+    }
+
 
     /*
     // Override to support conditional editing of the table view.
