@@ -18,10 +18,36 @@ class UserPostsTableViewController: UITableViewController {
         }
     }
     
+    var userId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.register(UINib(nibName: "PostTableViewCellTableViewCell", bundle: nil), forCellReuseIdentifier: "postcell")
+        
+        getPosts()
+        
+        title = "User \(userId! )"
+    }
+    
+    func getPosts () {
+        let jsonUrlString = "https://jsonplaceholder.typicode.com/posts?userId=\(userId ?? 0)"
+        
+        HttpClientApi.instance().makeAPICall(url: jsonUrlString, params: nil, method: .GET, success: { (data, response, error) in
+            print("data loaded")
+            
+            guard let data = data else { return }
+            
+            do {
+                self.posts = try JSONDecoder().decode([Post].self, from: data)
+                
+                
+            } catch let jsonError {
+                print("Decode Error ", jsonError)
+            }
+        }) { (data, response, error) in
+            print("wrong api call", error)
+        }
     }
 
     // MARK: - Table view data source

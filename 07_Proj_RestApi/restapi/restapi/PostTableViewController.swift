@@ -75,9 +75,20 @@ class PostTableViewController: UITableViewController {
         
         cell.lblTitle.text = posts[indexPath.row].title
         cell.lblBody.text = posts[indexPath.row].body
-//        cell.btnUserName.titleLabel?.text = "All Post by \(String(describing: posts[indexPath.row].userId))"
+        cell.btnUserName.tag = posts[indexPath.row].userId ?? 0
+        cell.btnUserName.addTarget(self, action: #selector(navigateToUserPosts), for: .touchUpInside)
 
         return cell
+    }
+    
+    @objc func navigateToUserPosts (sender: UIButton!) {
+        print("Click \(sender.tag)")
+
+         let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc: UserPostsTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "userpostdata") as! UserPostsTableViewController
+        vc.userId = sender.tag
+        self.navigationController?.pushViewController(vc, animated: true)
+//        self.present(vc, animated: true, completion: nil)
     }
 
     /*
