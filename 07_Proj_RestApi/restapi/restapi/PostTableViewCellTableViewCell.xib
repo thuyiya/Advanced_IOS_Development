@@ -9,36 +9,54 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="211" id="KGk-i7-Jjw" customClass="PostTableViewCellTableViewCell" customModule="restapi" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="441" height="211"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="175" id="KGk-i7-Jjw" customClass="PostTableViewCellTableViewCell" customModule="restapi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="175"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="441" height="211"/>
+                <rect key="frame" x="0.0" y="0.0" width="441" height="175"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWc-hj-5kW">
-                        <rect key="frame" x="56" y="40" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWc-hj-5kW">
+                        <rect key="frame" x="30" y="20" width="381" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Jdr-0L-7yj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                        <color key="textColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kea-tX-IM3">
-                        <rect key="frame" x="56" y="89" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kea-tX-IM3">
+                        <rect key="frame" x="30" y="60" width="381" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="Uxa-u5-SZi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHv-d2-T5Q">
-                        <rect key="frame" x="54" y="136" width="46" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="Button"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHv-d2-T5Q">
+                        <rect key="frame" x="365" y="136" width="46" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="OjH-bt-dYC"/>
+                            <constraint firstAttribute="height" constant="30" id="w1I-PJ-j1H"/>
+                        </constraints>
+                        <state key="normal" image="arrow.down.doc.fill" catalog="system"/>
                         <connections>
                             <action selector="getAllPostByUser:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RGc-QV-GhK"/>
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="ZHv-d2-T5Q" firstAttribute="trailing" secondItem="Kea-tX-IM3" secondAttribute="trailing" id="8UE-8m-f4V"/>
+                    <constraint firstItem="ZHv-d2-T5Q" firstAttribute="top" secondItem="Kea-tX-IM3" secondAttribute="bottom" constant="-4" id="HOA-Un-DvR"/>
+                    <constraint firstItem="Kea-tX-IM3" firstAttribute="leading" secondItem="lWc-hj-5kW" secondAttribute="leading" id="RgF-55-5Mx"/>
+                    <constraint firstAttribute="trailing" secondItem="lWc-hj-5kW" secondAttribute="trailing" constant="30" id="cfP-Hx-tmg"/>
+                    <constraint firstItem="lWc-hj-5kW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="hPb-Oq-h7K"/>
+                    <constraint firstItem="Kea-tX-IM3" firstAttribute="top" secondItem="lWc-hj-5kW" secondAttribute="bottom" constant="10" id="nw3-wt-nPf"/>
+                    <constraint firstItem="Kea-tX-IM3" firstAttribute="trailing" secondItem="lWc-hj-5kW" secondAttribute="trailing" id="qGE-Js-AYJ"/>
+                    <constraint firstItem="lWc-hj-5kW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="y0i-ZE-CZl"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
@@ -46,7 +64,10 @@
                 <outlet property="lblBody" destination="Kea-tX-IM3" id="71I-5i-QRm"/>
                 <outlet property="lblTitle" destination="lWc-hj-5kW" id="SLc-SA-hg0"/>
             </connections>
-            <point key="canvasLocation" x="52.898550724637687" y="148.32589285714286"/>
+            <point key="canvasLocation" x="52.898550724637687" y="136.27232142857142"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arrow.down.doc.fill" catalog="system" width="115" height="128"/>
+    </resources>
 </document>

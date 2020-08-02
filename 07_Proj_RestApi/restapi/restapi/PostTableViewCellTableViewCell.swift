@@ -14,6 +14,8 @@ class PostTableViewCellTableViewCell: UITableViewCell {
     
     @IBOutlet weak var btnUserName: UIButton!
     @IBOutlet weak var lblBody: UILabel!
+//    vat navigationRef:
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

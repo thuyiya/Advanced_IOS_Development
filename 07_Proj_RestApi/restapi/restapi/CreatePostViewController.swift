@@ -27,7 +27,14 @@ class CreatePostViewController: UIViewController {
         //navigate back to home page
     }
     
+    func updatePost() {
+        
+    }
+    
     @IBAction func submitPostData(_ sender: Any) {
+        //if isEdit
+        updatePost()
+        //else
         savePost()
     }
     

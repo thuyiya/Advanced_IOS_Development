@@ -73,8 +73,9 @@ class PostTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "postcell", for: indexPath) as! PostTableViewCellTableViewCell
         
-        cell.lblTitle.text = "asasdas"
-
+        cell.lblTitle.text = posts[indexPath.row].title
+        cell.lblBody.text = posts[indexPath.row].body
+//        cell.btnUserName.titleLabel?.text = "All Post by \(String(describing: posts[indexPath.row].userId))"
 
         return cell
     }
