@@ -1,5 +1,5 @@
 //
-//  PostTableViewController.swift
+//  UserPostsTableViewController.swift
 //  restapi
 //
 //  Created by thusitha on 8/2/20.
@@ -8,15 +8,8 @@
 
 import UIKit
 
-struct Post: Decodable {
-    var id: Int?
-    var userId: Int?
-    var title: String?
-    var body: String?
-}
+class UserPostsTableViewController: UITableViewController {
 
-class PostTableViewController: UITableViewController {
-    
     var posts = [Post]() {
         didSet {
             DispatchQueue.main.async {
@@ -24,61 +17,38 @@ class PostTableViewController: UITableViewController {
             }
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableView.register(UINib(nibName: "PostTableViewCellTableViewCell", bundle: nil), forCellReuseIdentifier: "postcell")
-        
-        getPosts()
-        
     }
-    
-    func getPosts () {
-        let jsonUrlString = "https://jsonplaceholder.typicode.com/posts"
-        
-        HttpClientApi.instance().makeAPICall(url: jsonUrlString, params: nil, method: .GET, success: { (data, response, error) in
-            print("data loaded")
-            
-            guard let data = data else { return }
-            
-            do {
-                self.posts = try JSONDecoder().decode([Post].self, from: data)
-                
-                
-            } catch let jsonError {
-                print("Decode Error ", jsonError)
-            }
-        }) { (data, response, error) in
-            print("wrong api call", error)
-        }
-    }
-    
+
+    // MARK: - Table view data source
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
+        // #warning Incomplete implementation, return the number of sections
         return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        // #warning Incomplete implementation, return the number of rows
         return posts.count
     }
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 174
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "postcell", for: indexPath) as! PostTableViewCellTableViewCell
         
-        cell.lblTitle.text = "asasdas"
-
+        cell.lblTitle.text = posts[indexPath.row].title
+        cell.lblBody.text = posts[indexPath.row].body
 
         return cell
     }
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

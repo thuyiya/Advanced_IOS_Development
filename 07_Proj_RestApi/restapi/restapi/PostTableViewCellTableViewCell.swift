@@ -27,6 +27,6 @@ class PostTableViewCellTableViewCell: UITableViewCell {
     
     
     @IBAction func getAllPostByUser(_ sender: Any) {
-        
+        //get all post related to the user
     }
 }

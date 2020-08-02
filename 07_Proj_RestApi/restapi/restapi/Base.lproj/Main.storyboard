@@ -3,10 +3,11 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Post Table View Controller-->
+        <!--Home-->
         <scene sceneID="ujY-Gq-aVA">
             <objects>
                 <tableViewController id="BqU-GH-HQb" customClass="PostTableViewController" customModule="restapi" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,11 +20,88 @@
                             <outlet property="delegate" destination="BqU-GH-HQb" id="f8g-Jq-8iA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="zfD-Q6-5Tk"/>
+                    <navigationItem key="navigationItem" title="Home" id="CYG-VC-024">
+                        <barButtonItem key="rightBarButtonItem" title="Create Post" id="ivH-6t-dkV">
+                            <connections>
+                                <segue destination="6xj-bW-ALZ" kind="show" identifier="postdataeditsegue" id="foM-Hl-tnn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="RJE-MZ-AJY" kind="show" identifier="showByUserSegue" id="1bT-Bx-nXj"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vmn-1F-eaO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1671.0144927536232" y="124.55357142857142"/>
+        </scene>
+        <!--Create Post-->
+        <scene sceneID="9Vn-TK-Dmj">
+            <objects>
+                <viewController id="6xj-bW-ALZ" customClass="CreatePostViewController" customModule="restapi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jSS-t6-W1B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qv-eLx">
+                                <rect key="frame" x="75" y="137" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Body" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="czU-eO-cJ8">
+                                <rect key="frame" x="75" y="236" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W4M-yA-3Fo">
+                                <rect key="frame" x="75" y="194" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Yr-oF-Az6">
+                                <rect key="frame" x="165" y="494" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitPostData:" destination="6xj-bW-ALZ" eventType="touchUpInside" id="W4v-Ab-A9a"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="EUO-WS-U8G"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Create Post" id="OdC-E0-17U"/>
+                    <connections>
+                        <outlet property="txtPostBody" destination="czU-eO-cJ8" id="wdh-Rx-9UD"/>
+                        <outlet property="txtPostTitle" destination="W4M-yA-3Fo" id="coM-dF-VRW"/>
+                        <outlet property="txtUserId" destination="y8d-qv-eLx" id="jze-RD-nfx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gd5-Tj-upk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2660" y="121"/>
+        </scene>
+        <!--User Posts Table View Controller-->
+        <scene sceneID="O3j-j8-be8">
+            <objects>
+                <tableViewController id="RJE-MZ-AJY" customClass="UserPostsTableViewController" customModule="restapi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1JX-5d-mNM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="RJE-MZ-AJY" id="s54-t2-yQa"/>
+                            <outlet property="delegate" destination="RJE-MZ-AJY" id="TFz-Qx-6X9"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="92s-Ko-9oC"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MFU-i8-jqR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2659" y="858"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BS0-LR-Xax">
