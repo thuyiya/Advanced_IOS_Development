@@ -1262,7 +1262,26 @@ extension HomeViewController: CLLocationManagerDelegate {
     }
 
 ```
-10. 
+10. Lets pin user location.
+
+```swift
+    // MARK: - Helper Function
+    
+    func configureUI() {
+        confugireMapView()
+    }
+    
+    func confugireMapView() {
+        view.addSubview(mapView)
+        mapView.frame = view.frame
+        
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+    }
+
+```
+
+11. Add user location in to simulator click on it go to features -> Location -> CustomLocation then add your coords
 
 <a name="locationinputuserinterface"/>
 
