@@ -12,9 +12,11 @@
 
 ### Login And Registation UI
 
-![alt text](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signin.png)
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signin.png" alt="Kitten"
+	title="A cute kitten" width="240" />
 
-![alt text](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signup.png)
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signup.png" alt="Kitten"
+	title="A cute kitten" width="240" />
 
 1. create sigle view application
 2. Create 5 group folders in project root clicking on project root foler 'New Group'
@@ -867,9 +869,18 @@ let alreadyHaveAccountButton: UIButton = {
 
 Head over to Firebase Console and create a new project (name it as you wish). Once you’ve created a new Firebase project, go to its Firebase Dashboard, by simply clicking on it in Firebase. You should be landing on this screen:
 
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/step1.png" alt="Kitten"
+	title="A cute kitten" width="720" />
+
 Below the centered title, press on the “Add app” button and add a new iOS app to your project. For the bundle ID, you can use “io.instamobile.FirebaseStarterApp“, which is the Bundle ID of our starter project. If you’d prefer to use your own bundle ID, make sure you update the Bundle Identifier in Xcode (“General” tab of the FirebaseStarterApp build target)
 
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/step2.png" alt="Kitten"
+	title="A cute kitten" width="420" />
+
 Once registered, Firebase will generate a GoogleService-Info.plist file, which you need to download and add to your project in Xcode.
+
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/step3.png" alt="Kitten"
+	title="A cute kitten" width="420" />
 
 That’s it – you now have a Firebase iOS project that can be used from within the Swift code. Let’s see how.
 
@@ -891,4 +902,5 @@ pod 'Firebase/Firestore'
 
 Once you do this, you need to run “pod update” in your terminal which will download the SDKs for you. A successful result will look like this in the terminal:
 
-
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/podinstall.png" alt="Kitten"
+	title="A cute kitten" width="420" />
