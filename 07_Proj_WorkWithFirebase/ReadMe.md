@@ -12,9 +12,9 @@
 
 ### Login And Registation UI
 
-![](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signin.png | width=320)
+![alt text](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signin.png)
 
-![](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signup.png | width=320)
+![alt text](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signup.png)
 
 1. create sigle view application
 2. Create 5 group folders in project root clicking on project root foler 'New Group'
