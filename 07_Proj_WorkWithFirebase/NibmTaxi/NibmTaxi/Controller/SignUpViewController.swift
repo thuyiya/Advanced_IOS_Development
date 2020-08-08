@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SignUpViewController: UIViewController {
     // MARK: - Properties
@@ -21,19 +22,19 @@ class SignUpViewController: UIViewController {
     }()
     
     private lazy var emailContainerView: UIView = {
-        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: (emailTextFiled as! UITextField))
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: emailTextFiled )
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var fullNameContainerView: UIView = {
-        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: (fullNameTextFiled as! UITextField))
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: fullNameTextFiled )
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: (passwordTextFiled as! UITextField))
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: passwordTextFiled)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
@@ -44,15 +45,15 @@ class SignUpViewController: UIViewController {
         return view
     }()
     
-    private let emailTextFiled: UIView = {
+    private let emailTextFiled: UITextField = {
         return UITextField().textField(withPlaceholder: "Email", isSecureTextEntry: false)
     }()
     
-    private let fullNameTextFiled: UIView = {
+    private let fullNameTextFiled: UITextField = {
         return UITextField().textField(withPlaceholder: "Full Name", isSecureTextEntry: false)
     }()
     
-    private let passwordTextFiled: UIView = {
+    private let passwordTextFiled: UITextField = {
         return UITextField().textField(withPlaceholder: "Password", isSecureTextEntry: true)
     }()
     
@@ -69,6 +70,7 @@ class SignUpViewController: UIViewController {
         let button = AuthButtonUIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -116,6 +118,32 @@ class SignUpViewController: UIViewController {
     }
     
     // MARK: - Selectors
+    
+    @objc func handleSignUp() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        guard let fullName = fullNameTextFiled.text else { return }
+        let accountType = accountTypeSegmentedControl.selectedSegmentIndex
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Faild to register user with error \(error)")
+                return
+            }
+            
+            guard let uid = result?.user.uid else { return }
+            
+            let values = [
+                "email": email,
+                "fullName": fullName,
+                "accountType": accountType
+                ] as [String : Any]
+            
+            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
+                print("Successfuly Registerd and save data..")
+            }
+        }
+    }
     
     @objc func handleShowLogIn() {
         navigationController?.popViewController(animated: true)

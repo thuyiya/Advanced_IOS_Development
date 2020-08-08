@@ -940,6 +940,56 @@ This builds and runs successfully in Xcode. We’re done here and ready to jump 
 <img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/firebasedatabase.png" alt="Kitten"
 	title="A cute kitten" width="720" />
 
+2. Lets add action for our sign up button
+
+`button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)`
+
+3. Then lets create user
+```swift
+// MARK: - Selectors
+    
+    @objc func handleSignUp() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            //
+        }
+    }
+
+...
+```
+if you got any errors emailTextFiled has no memebr of text, convert emailTextFiled UIView to UITextfiled 
+
+4. lets update that created user with database
+```swift
+    @objc func handleSignUp() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        guard let fullName = fullNameTextFiled.text else { return }
+        let accountType = accountTypeSegmentedControl.selectedSegmentIndex
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Faild to register user with error \(error)")
+                return
+            }
+            
+            guard let uid = result?.user.uid else { return }
+            
+            let values = [
+                "email": email,
+                "fullName": fullName,
+                "accountType": accountType
+                ] as [String : Any]
+            
+            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
+                print("Successfuly Registerd and save data..")
+            }
+        }
+    }
+```
+5. 
 
 
 
