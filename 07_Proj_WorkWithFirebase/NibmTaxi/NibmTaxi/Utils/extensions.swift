@@ -8,6 +8,15 @@
 
 import UIKit
 
+extension UIColor {
+    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat? = 1.0) -> UIColor {
+        return UIColor.init(red: red/255, green: green/255, blue: blue/255, alpha: alpha!)
+    }
+    
+    static let backgroundColor = rgb(red: 25, green: 25, blue: 25)
+    static let mainBlueTint = rgb(red: 17, green: 154, blue: 237)
+}
+
 extension UIView {
     
     func inputContainerView(image: UIImage, textField: UITextField) -> UIView {

@@ -493,3 +493,37 @@ let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainer
 let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
 ...
 ```
+40. Lets create uicolor extention for our rgb colors
+```swift
+extension UIColor {
+    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat? = 1.0) -> UIColor {
+        return UIColor.init(red: red/255, green: green/255, blue: blue/255, alpha: alpha!)
+    }
+    
+    static let backgroundColor = rgb(red: 25, green: 25, blue: 25)
+    static let mainBlueTint = rgb(red: 17, green: 154, blue: 237)
+}
+
+```
+41. create dont Have Account Button
+```swift
+...
+let dontHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint]))
+        
+//        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        return button
+    }()
+...
+
+view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.centerX(inView: view)
+        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
+
+...
+```
