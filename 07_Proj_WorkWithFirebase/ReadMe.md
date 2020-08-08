@@ -1119,7 +1119,7 @@ class HomeViewController: UIViewController {
  ```
  2. If user login call `configureUI()` method inside the `checkIsUserLoggedIn`
 
- 3. But now you will face problem again. What if you logout and log in again. You will see home screen without map view. that because `checkIsUserLoggedIn` is already created inside of the lifecycal method and its not calling again. because viewdidload already fired. for that we have to call `checkIsUserLoggedIn` before dissmiss the login view controller.
+ 3. But now you will face problem again. What if you logout and log in again. You will see home screen without map view. that because `checkIsUserLoggedIn` is already created inside of the lifecycal method and its not calling again. because viewdidload already fired. for that we have to call `checkIsUserLoggedIn` before dissmiss the login view controller. Do the samething for signup controller
 
 FOR IOS 13
  ```swift
@@ -1145,4 +1145,6 @@ guard let controller = UIApplication.shared.keyWindow?.rootViewController as? Ho
             
             self.dismiss(animated: true, completion: nil)
 ```
+
+4. 
 
