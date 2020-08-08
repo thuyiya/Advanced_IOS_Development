@@ -989,7 +989,36 @@ if you got any errors emailTextFiled has no memebr of text, convert emailTextFil
         }
     }
 ```
-5. 
+5. Lets work with login
+```swift
+...
+import Firebase
+...
+    private let loginButton: AuthButtonUIButton = {
+        let button = AuthButtonUIButton(type: .system)
+        button.setTitle("Log In", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
+        return button
+    }()
+...
+    @objc func handleSignIn() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: Faild to log user with error \(error.localizedDescription)")
+                return
+            }
+            
+            //  guard let uid = result?.user.uid else { return }
+            
+            print("Login Successful..")
+        }
+    }
+...
+```
 
 
 
