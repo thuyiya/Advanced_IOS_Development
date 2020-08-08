@@ -620,4 +620,227 @@ override var preferredStatusBarStyle: UIStatusBarStyle {
         navigationController?.navigationBar.barStyle = .black
     }
 ```
-50. 
+50.  lets create our sign up view controller
+```swift
+//
+//  SignUpViewController.swift
+//  NibmTaxi
+//
+//  Created by thusitha on 8/8/20.
+//  Copyright © 2020 nibm. All rights reserved.
+//
+
+import UIKit
+
+class SignUpViewController: UIViewController {
+    // MARK: - Properties
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "NTAXI"
+        label.font = UIFont(name: "Avenir-Light", size: 36)
+        label.textColor = UIColor(white: 1, alpha: 0.8)
+        
+        return label
+    }()
+    
+    private lazy var emailContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: emailTextFiled as! UITextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    private lazy var fullNameContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: fullNameTextFiled as! UITextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    private lazy var passwordContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: passwordTextFiled as! UITextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    
+    private let emailTextFiled: UIView = {
+        return UITextField().textField(withPlaceholder: "Email", isSecureTextEntry: false)
+    }()
+    
+    private let fullNameTextFiled: UIView = {
+        return UITextField().textField(withPlaceholder: "Full Name", isSecureTextEntry: false)
+    }()
+    
+    private let passwordTextFiled: UIView = {
+        return UITextField().textField(withPlaceholder: "Password", isSecureTextEntry: true)
+    }()
+    
+    // MARK: - Lifecycale
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+    }
+    
+    // MARK: - Helper Function
+    
+    func configureUI() {
+        view.backgroundColor = .backgroundColor
+        
+        view.addSubview(titleLabel)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
+        titleLabel.centerX(inView: view)
+        
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, fullNameContainerView, passwordContainerView])
+        stack.axis = .vertical
+        stack.distribution = .fillProportionally
+        stack.spacing = 24
+        
+        view.addSubview(stack)
+        stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16, paddingRight: 16)
+        
+    }
+}
+
+```
+51. Then lets create segment controller for select type for the user. for that we have to update our inputContainerView with segment view parameter
+```swift
+...
+ func inputContainerView(image: UIImage, textField: UITextField? = nil, segentedControl: UISegmentedControl? = nil) -> UIView {
+        let view = UIView()
+        
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.alpha = 0.87
+        view.addSubview(imageView)
+        
+        if let textField = textField {
+            imageView.centerY(inView: view)
+            imageView.anchor(left: view.leftAnchor, paddingLeft: 8, width: 24, height: 24)
+            
+            view.addSubview(textField)
+            textField.centerY(inView: view)
+            textField.anchor(left: imageView.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, paddingBottom: 8)
+        }
+        
+        if let segentedControl = segentedControl {
+            imageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: -8, paddingLeft: 8, width: 24, height: 24)
+            
+            view.addSubview(segentedControl)
+            segentedControl.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 8, paddingRight: 8)
+            segentedControl.centerY(inView: view, constant: 8)
+        }
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = .lightGray
+        view.addSubview(separatorView)
+        separatorView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, height: 0.75)
+        
+        return view
+    }
+    ...
+
+    func centerY(inView view: UIView, constant: CGFloat = 0) {
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
+    }
+
+    ....
+```
+52. Now create segemnt controller in signup view controller
+```swift
+...
+
+private lazy var accountTypeContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_account_box_white_2x"), segentedControl: accountTypeSegmentedControl)
+        view.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return view
+    }()
+...
+
+private let accountTypeSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Rider", "Driver"])
+        sc.backgroundColor = .backgroundColor
+        sc.tintColor = UIColor(white: 1, alpha: 0.87)
+        sc.selectedSegmentIndex = 0
+        
+        return sc
+    }()
+
+    ...
+```
+53. lets add that to the our stack view
+```swift
+
+...
+let stack = UIStackView(arrangedSubviews: [emailContainerView, fullNameContainerView, passwordContainerView, accountTypeContainerView, signUpButton])
+
+...
+
+```
+54. now create our sign up button, for that lets create common sub class for all auth buttons. create class inside vide folder name it as AuthButtonUIButton
+```swift
+import UIKit
+
+class AuthButtonUIButton: UIButton {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setTitleColor(UIColor(white: 1, alpha: 0.5), for: .normal)
+        backgroundColor = .mainBlueTint
+        layer.cornerRadius = 5
+        heightAnchor.constraint(equalToConstant: 50).isActive = true
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("AuthButtonUIButton coder error")
+    }
+}
+
+```
+55. lets add to sign up controller
+```swift
+private let signUpButton: AuthButtonUIButton = {
+        let button = AuthButtonUIButton(type: .system)
+        button.setTitle("Sign Up", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        return button
+    }()
+
+...
+let stack = UIStackView(arrangedSubviews: [emailContainerView, fullNameContainerView, passwordContainerView, accountTypeContainerView, signUpButton])
+
+...
+```
+56. lets create navigation back button to login screen `alreadyHaveAccountButton`
+```swift
+...
+let alreadyHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Log In", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint]))
+        
+        button.addTarget(self, action: #selector(handleShowLogIn), for: .touchUpInside)
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        return button
+    }()
+...
+...
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.centerX(inView: view)
+        alreadyHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
+        
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func handleShowLogIn() {
+        navigationController?.popViewController(animated: true)
+    }
+
+...
+```

@@ -13,6 +13,7 @@
 		1F430A8924DE48E900FC5F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8824DE48E900FC5F86 /* LoginViewController.swift */; };
 		1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8A24DE5A8000FC5F86 /* extensions.swift */; };
 		1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */; };
+		1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1F430A8824DE48E900FC5F86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1F430A8A24DE5A8000FC5F86 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButtonUIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		1F430A8524DE47DF00FC5F86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				1F430A8924DE48E900FC5F86 /* LoginViewController.swift in Sources */,
 				1F430A7024DE470000FC5F86 /* AppDelegate.swift in Sources */,
 				1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */,
+				1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */,
 				1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
