@@ -369,3 +369,107 @@ private lazy var passwordContainerView: UIView = {
         
     ...
 ```
+32. But we are repeating same kind code over and over again, se lets refactor our code little bit. Lets add most our ui code to extentions
+
+##### Code Refactor
+
+```swift
+
+extension UITextField {
+    func textField(withPlaceholder placeholder: String, isSecureTextEntry: Bool) -> UITextField{
+        let tf = UITextField()
+        tf.borderStyle = .none
+        tf.font = UIFont.systemFont(ofSize: 16)
+        tf.textColor = .white
+        tf.keyboardAppearance = .dark
+        tf.isSecureTextEntry = isSecureTextEntry
+        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        return tf
+    }
+}
+
+```
+33. lets call it in login controller
+```swift
+...
+private let emailTextFiled: UIView = {
+        return UITextField().textField(withPlaceholder: "Email", isSecureTextEntry: false)
+    }()
+    
+    private let passwordTextFiled: UIView = {
+        return UITextField().textField(withPlaceholder: "Password", isSecureTextEntry: true)
+    }()
+...
+```
+34. let create extention for input container
+```swift
+
+extension UIView {
+    
+    func inputContainerView(image: UIImage, textField: UITextField) -> UIView {
+        let view = UIView()
+        
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.alpha = 0.87
+        view.addSubview(imageView)
+        imageView.centerY(inView: view)
+        imageView.anchor(left: view.leftAnchor, paddingLeft: 8, width: 24, height: 24)
+        
+        view.addSubview(textField)
+        textField.centerY(inView: view)
+        textField.anchor(left: imageView.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, paddingBottom: 8)
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = .lightGray
+        view.addSubview(separatorView)
+        separatorView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, height: 0.75)
+        
+        return view
+    }
+
+    ...
+```
+35. lets call it inside of controller
+```swift
+...
+
+private lazy var emailContainerView: UIView = {
+        return UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: emailTextFiled as! UITextField)
+    }()
+    
+    private lazy var passwordContainerView: UIView = {
+        return UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: passwordTextFiled as! UITextField)
+    }()
+
+...
+```
+36. now we have to make this ui render in all device. let use stack view to make it happen. For that we need vertical stack. when you work with vertical stack we have to give height to our view containers first
+```swift
+private lazy var emailContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: emailTextFiled as! UITextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    private lazy var passwordContainerView: UIView = {
+        let view = UIView().inputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: passwordTextFiled as! UITextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+```
+37. then lets add it to stack view
+```swift
+...
+
+let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView])
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 16
+        
+        view.addSubview(stack)
+        stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16, paddingRight: 16)
+
+...
+```
