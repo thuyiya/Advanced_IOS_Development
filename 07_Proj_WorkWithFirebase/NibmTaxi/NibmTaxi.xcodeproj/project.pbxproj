@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13804554FC62FAF6B86FCA25 /* Pods_NibmTaxi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECEAB41504B89C079E39470 /* Pods_NibmTaxi.framework */; };
 		1F430A7024DE470000FC5F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A6F24DE470000FC5F86 /* AppDelegate.swift */; };
 		1F430A7924DE470400FC5F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7824DE470400FC5F86 /* Assets.xcassets */; };
 		1F430A7C24DE470400FC5F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7A24DE470400FC5F86 /* LaunchScreen.storyboard */; };
@@ -14,6 +15,7 @@
 		1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8A24DE5A8000FC5F86 /* extensions.swift */; };
 		1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */; };
 		1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */; };
+		1F430A9124DEB4A100FC5F86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A9024DEB4A100FC5F86 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		1F430A8A24DE5A8000FC5F86 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButtonUIButton.swift; sourceTree = "<group>"; };
+		1F430A9024DEB4A100FC5F86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7B758BC23DC9DA353A83C71C /* Pods-NibmTaxi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NibmTaxi.release.xcconfig"; path = "Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi.release.xcconfig"; sourceTree = "<group>"; };
+		CECEAB41504B89C079E39470 /* Pods_NibmTaxi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NibmTaxi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7081C0D4B0F5A71CCE16F4E /* Pods-NibmTaxi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NibmTaxi.debug.xcconfig"; path = "Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13804554FC62FAF6B86FCA25 /* Pods_NibmTaxi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +51,8 @@
 			children = (
 				1F430A6E24DE470000FC5F86 /* NibmTaxi */,
 				1F430A6D24DE470000FC5F86 /* Products */,
+				67CEBF1596976E54F3C9F9FA /* Pods */,
+				653A33D5A2B50734CFC42BA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +75,7 @@
 				1F430A6F24DE470000FC5F86 /* AppDelegate.swift */,
 				1F430A7824DE470400FC5F86 /* Assets.xcassets */,
 				1F430A7A24DE470400FC5F86 /* LaunchScreen.storyboard */,
+				1F430A9024DEB4A100FC5F86 /* GoogleService-Info.plist */,
 				1F430A7D24DE470400FC5F86 /* Info.plist */,
 			);
 			path = NibmTaxi;
@@ -110,6 +120,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		653A33D5A2B50734CFC42BA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CECEAB41504B89C079E39470 /* Pods_NibmTaxi.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		67CEBF1596976E54F3C9F9FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7081C0D4B0F5A71CCE16F4E /* Pods-NibmTaxi.debug.xcconfig */,
+				7B758BC23DC9DA353A83C71C /* Pods-NibmTaxi.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -117,9 +145,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F430A8024DE470500FC5F86 /* Build configuration list for PBXNativeTarget "NibmTaxi" */;
 			buildPhases = (
+				9758F7FE877FE5A33DDFB5AE /* [CP] Check Pods Manifest.lock */,
 				1F430A6824DE470000FC5F86 /* Sources */,
 				1F430A6924DE470000FC5F86 /* Frameworks */,
 				1F430A6A24DE470000FC5F86 /* Resources */,
+				16C3E645367A07DA4A80AF96 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -170,10 +200,53 @@
 			files = (
 				1F430A7C24DE470400FC5F86 /* LaunchScreen.storyboard in Resources */,
 				1F430A7924DE470400FC5F86 /* Assets.xcassets in Resources */,
+				1F430A9124DEB4A100FC5F86 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16C3E645367A07DA4A80AF96 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9758F7FE877FE5A33DDFB5AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NibmTaxi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1F430A6824DE470000FC5F86 /* Sources */ = {
@@ -318,6 +391,7 @@
 		};
 		1F430A8124DE470500FC5F86 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7081C0D4B0F5A71CCE16F4E /* Pods-NibmTaxi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -336,6 +410,7 @@
 		};
 		1F430A8224DE470500FC5F86 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B758BC23DC9DA353A83C71C /* Pods-NibmTaxi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

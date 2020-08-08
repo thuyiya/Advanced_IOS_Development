@@ -888,22 +888,29 @@ That’s it – you now have a Firebase iOS project that can be used from within
 
 #### Adding Firebase Pods Dependencies to Your App
 
-In order to query the Firebase project from within your iOS app, we need to use the Firebase iOS SDKs, which are a set of libraries provided by Google, to make it easy for iOS developer to use Firebase in their app. These Swift SDKs are basically bridging the communication of your iOS app with the Firebase backend.
+1. In order to query the Firebase project from within your iOS app, we need to use the Firebase iOS SDKs, which are a set of libraries provided by Google, to make it easy for iOS developer to use Firebase in their app. These Swift SDKs are basically bridging the communication of your iOS app with the Firebase backend.
 To add the Firebase SDKs to your app, just add cocoapods dependencies to the Podfile. Getting started with Cocoapods is out of scope for this tutorial, so if you’re not familiar with it, check out http://cocoapods.org.
 Open the Podfile file, and add the following lines:
 
 ```pod
 
-pod 'Firebase/Core'
-pod 'Firebase/Auth'
-pod 'Firebase/Firestore'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'GeoFire'
 
 ```
 
-Once you do this, you need to run “pod update” in your terminal which will download the SDKs for you. A successful result will look like this in the terminal:
+2. Once you do this, you need to run “pod install” in your terminal which will download the SDKs for you. A successful result will look like this in the terminal:
 
 <img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/podinstall.png" alt="Kitten"
 	title="A cute kitten" width="420" />
+
+3. 'Now close your xcode project and got the project file and the file extention call .xcworkspace (white project file) Then open it.'
+ 
+4. Firebase Inizilation:
 
 To check whether this was successful, let’s see if we can use Firebase dependencies in the code now. Open up AppDelegate.swift and add this import:
 
@@ -920,4 +927,19 @@ FirebaseApp.configure()
 ...
 ```
 This builds and runs successfully in Xcode. We’re done here and ready to jump into action.
+
+
+<a name="createusers"/>
+
+### Lets work with firebase
+
+##### Create users
+
+1. For this we are going to use Firebase Realtime database, Lets create realtime database in test mode
+
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/firebasedatabase.png" alt="Kitten"
+	title="A cute kitten" width="720" />
+
+
+
 
