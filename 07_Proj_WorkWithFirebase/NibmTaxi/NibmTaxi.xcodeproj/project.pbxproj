@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		13804554FC62FAF6B86FCA25 /* Pods_NibmTaxi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECEAB41504B89C079E39470 /* Pods_NibmTaxi.framework */; };
+		1F36737D24DEDBFD00C3C1B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36737C24DEDBFD00C3C1B5 /* HomeViewController.swift */; };
 		1F430A7024DE470000FC5F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A6F24DE470000FC5F86 /* AppDelegate.swift */; };
 		1F430A7924DE470400FC5F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7824DE470400FC5F86 /* Assets.xcassets */; };
 		1F430A7C24DE470400FC5F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7A24DE470400FC5F86 /* LaunchScreen.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F36737C24DEDBFD00C3C1B5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1F430A6C24DE470000FC5F86 /* NibmTaxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NibmTaxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F430A6F24DE470000FC5F86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F430A7824DE470400FC5F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				1F430A8824DE48E900FC5F86 /* LoginViewController.swift */,
 				1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */,
+				1F36737C24DEDBFD00C3C1B5 /* HomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -134,7 +137,6 @@
 				E7081C0D4B0F5A71CCE16F4E /* Pods-NibmTaxi.debug.xcconfig */,
 				7B758BC23DC9DA353A83C71C /* Pods-NibmTaxi.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +260,7 @@
 				1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */,
 				1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */,
 				1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */,
+				1F36737D24DEDBFD00C3C1B5 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

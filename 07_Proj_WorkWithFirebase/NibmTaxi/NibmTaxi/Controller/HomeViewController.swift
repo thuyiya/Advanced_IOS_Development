@@ -7,24 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController {
+    // MARK: - Properties
+    
+    // MARK: - Lifecycale
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        checkIsUserLoggedIn()
+        view.backgroundColor = .white
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: API
+    
+    func checkIsUserLoggedIn() {
+        if(Auth.auth().currentUser?.uid == nil) {
+            print("DEBUG: User not logged in..")
+        } else {
+            print("DEBUG: User is logged in..")
+        }
     }
-    */
-
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("DEBUG: sign out error")
+        }
+    }
 }

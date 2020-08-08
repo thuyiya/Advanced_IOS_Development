@@ -6,6 +6,7 @@
     * [ Setting up Your Firebase Account ](#fstep1)
     * [ Adding Firebase Pods Dependencies to Your App ](#fstep2)
 * [ Create Users. ](#createusers)
+* [ Home Controler. ](#apphome)
 * [ Map Kit. ](#mapkit)
 
 <a name="authui"/>
@@ -933,7 +934,7 @@ This builds and runs successfully in Xcode. We’re done here and ready to jump 
 
 ### Lets work with firebase
 
-##### Create users
+##### Create users and Login
 
 1. For this we are going to use Firebase Realtime database, Lets create realtime database in test mode
 
@@ -1020,5 +1021,49 @@ import Firebase
 ...
 ```
 
+<a name="apphome"/>
 
+### Home Controller and Stay Login
+
+1. Lets create our app home view controller, this will be always root controller of the app, if user logged in we do nothing, but if your not looged in we will navigate to login view controller
+2. Lets check user sign in and sign out methods
+```swift
+import UIKit
+import Firebase
+
+class HomeViewController: UIViewController {
+    // MARK: - Properties
+    
+    // MARK: - Lifecycale
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        checkIsUserLoggedIn()
+        view.backgroundColor = .white
+    }
+    
+    //MARK: API
+    
+    func checkIsUserLoggedIn() {
+        if(Auth.auth().currentUser?.uid == nil) {
+            print("DEBUG: User not logged in..")
+        } else {
+            print("DEBUG: User is logged in..")
+        }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("DEBUG: sign out error")
+        }
+    }
+}
+```
+3. 
+
+<a name="mapkit"/>
+
+### Work with map
 
