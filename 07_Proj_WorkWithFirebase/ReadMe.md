@@ -1166,7 +1166,103 @@ guard let controller = UIApplication.shared.keyWindow?.rootViewController as? Ho
 
 5. And then lets add the location manager to your home page `private let locationManager = CLLocationManager()` This will promt our users to allow us to access their location
 
-6. 
+6. check permission
+```swift
+
+class HomeViewController: UIViewController {
+    // MARK: - Properties
+    
+    private let mapView = MKMapView()
+    private let locationManager = CLLocationManager()
+    
+    // MARK: - Lifecycale
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        checkIsUserLoggedIn()
+        enableLocationServices()
+
+....
+....
+// MARK: - LocationServices
+
+extension HomeViewController {
+    func enableLocationServices() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            print("DEBUG: not Determined")
+        case .restricted, .denied:
+            break
+        case .authorizedWhenInUse:
+            print("DEBUG: authorized When In Use")
+        case .authorizedAlways:
+            print("DEBUG: authorized Always")
+        default:
+            break
+        }
+    }
+}
+
+```
+
+7. request permission and update location
+```swift
+switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedWhenInUse:
+            locationManager.requestAlwaysAuthorization()
+        case .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        default:
+            break
+        }
+```
+
+8. Now we have to check is this Authorization Status changers or not for that we have to work with location manager delegate
+
+```swift
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func enableLocationServices() {
+        
+        locationManager.delegate = self
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedWhenInUse:
+            locationManager.requestAlwaysAuthorization()
+        case .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+    }
+}
+```
+
+9. We do this because if user accedently did not allowed it but user want to access map features again. so user has to chnage it via settings. basicaly it will be confusing
+
+```swift
+        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+        }
+    }
+
+```
+10. 
 
 <a name="locationinputuserinterface"/>
 

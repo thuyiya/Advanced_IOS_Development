@@ -17,11 +17,12 @@ class HomeViewController: UIViewController {
     private let locationManager = CLLocationManager()
     
     // MARK: - Lifecycale
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIsUserLoggedIn()
-//        signOut()
+        enableLocationServices()
+        //        signOut()
         view.backgroundColor = .white
     }
     
@@ -52,5 +53,35 @@ class HomeViewController: UIViewController {
     func configureUI() {
         view.addSubview(mapView)
         mapView.frame = view.frame
+    }
+}
+
+// MARK: - LocationServices
+
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func enableLocationServices() {
+        
+        locationManager.delegate = self
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedWhenInUse:
+            locationManager.requestAlwaysAuthorization()
+        case .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+        }
     }
 }
