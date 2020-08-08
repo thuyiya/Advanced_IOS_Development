@@ -24,7 +24,11 @@ class HomeViewController: UIViewController {
     
     func checkIsUserLoggedIn() {
         if(Auth.auth().currentUser?.uid == nil) {
-            print("DEBUG: User not logged in..")
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
         } else {
             print("DEBUG: User is logged in..")
         }

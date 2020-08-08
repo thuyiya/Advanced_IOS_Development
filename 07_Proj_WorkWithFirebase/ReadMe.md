@@ -1061,7 +1061,30 @@ class HomeViewController: UIViewController {
     }
 }
 ```
-3. 
+3. lets navigate users to login screen if user not log in
+```swift
+        if(Auth.auth().currentUser?.uid == nil) {
+            let nav = UINavigationController(rootViewController: LoginViewController())
+            present(nav, animated: true, completion: nil)
+            
+        } else {
+            print("DEBUG: User is logged in..")
+        }
+```
+4. After you run this this will probably not going to work, that because you have to wait until view load task get finish. to overcome this we can use DispatchQueue.main.async
+```swift
+    DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                self.present(nav, animated: true, completion: nil)
+            }
+```
+
+5. For xocde 11 users you have to change navigation modal present style to full screen if you want that view in full screen
+```swift
+nav.modalPresentationStyle = .fullScreen
+```
+
+6.
 
 <a name="mapkit"/>
 
