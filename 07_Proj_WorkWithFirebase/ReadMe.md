@@ -1084,9 +1084,65 @@ class HomeViewController: UIViewController {
 nav.modalPresentationStyle = .fullScreen
 ```
 
-6.
+6. After user log in from our login controller we have to navigate home controller. Our login controller is now on top of the home view controller. We can navigate back to home controller by dissmiss form our login controller after we log in. so replace this
+```swift
+    self.dismiss(animated: true, completion: nil)
+```
+with success login print and success registation print of your code
 
 <a name="mapkit"/>
 
 ### Work with map
+
+ MapKit is a powerful API available on iOS devices that makes it easy to display maps, mark locations, enhance with custom data and even draw routes or other shapes on top.
+
+ 1. lets add Map to your app. Before everything import MapKit to your code
+ ```swift
+
+import UIKit
+import Firebase
+import MapKit
+
+class HomeViewController: UIViewController {
+    // MARK: - Properties
+    
+    private let mapView = MKMapView()
+...
+ 
+ // MARK: - Helper Function
+    
+    func configureUI() {
+        view.addSubview(mapView)
+        mapView.frame = view.frame
+    }
+
+ ```
+ 2. If user login call `configureUI()` method inside the `checkIsUserLoggedIn`
+
+ 3. But now you will face problem again. What if you logout and log in again. You will see home screen without map view. that because `checkIsUserLoggedIn` is already created inside of the lifecycal method and its not calling again. because viewdidload already fired. for that we have to call `checkIsUserLoggedIn` before dissmiss the login view controller.
+
+FOR IOS 13
+ ```swift
+ ...
+let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+            
+            guard let controller = keyWindow?.rootViewController as? HomeViewController else { return }
+            controller.configureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+ ```
+
+ Before IOS 13
+ ```swift
+...
+guard let controller = UIApplication.shared.keyWindow?.rootViewController as? HomeViewController else { return }
+            controller.configureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+```
 
