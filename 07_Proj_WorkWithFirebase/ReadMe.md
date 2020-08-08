@@ -514,8 +514,6 @@ let dontHaveAccountButton: UIButton = {
         
         attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint]))
         
-//        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
-        
         button.setAttributedTitle(attributedTitle, for: .normal)
         return button
     }()
@@ -527,3 +525,99 @@ view.addSubview(dontHaveAccountButton)
 
 ...
 ```
+42. Lets add action handler to our dontHaveAccount button `button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)`
+43. then lets create this handleShowSignUp function
+```swift
+@objc func handleShowSignUp() {
+        
+    }
+```
+44. Now we have to create signup view controller. When some one click on signup button we going to navigate to signup view controller
+```swift
+import UIKit
+
+class SignUpViewController: UIViewController {
+    // MARK: - Properties
+    
+    // MARK: - Lifecycale
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        
+    }
+
+    // MARK: - Selectors
+}
+
+```
+45. lets navigate to that controller
+```swift
+...
+
+@objc func handleShowSignUp() {
+        let vc = SignUpViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+```
+46. now if you run this nothing will happen with thi function, that because our root view controller is not a navigation view controller. then lets add navigation behaviour to our root view controller (login view). Lets go to the AppDelegate
+```swift
+...
+window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+```
+48. if you make navigation barstyle as black you no need to make status bar color in light mode so you can remove that function
+```swift
+override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+```
+49. Lest remove the navigation bar
+```swift
+...
+// MARK: - Lifecycale
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func handleShowSignUp() {
+        let vc = SignUpViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // MARK: - Helper Function
+    
+    func configureUI() {
+        
+        configureNavigationBar()
+        
+        view.backgroundColor = .backgroundColor
+        
+        view.addSubview(titleLabel)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
+        titleLabel.centerX(inView: view)
+        
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 24
+        
+        view.addSubview(stack)
+        stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16, paddingRight: 16)
+        
+        view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.centerX(inView: view)
+        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
+    }
+    
+    func configureNavigationBar() {
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barStyle = .black
+    }
+```
+50. 
