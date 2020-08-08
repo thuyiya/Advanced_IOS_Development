@@ -3,10 +3,13 @@
 
 * [ Auth UI. ](#authui)
 * [ Setup Firebase. ](#firebase)
+    * [ Setting up Your Firebase Account ](#fstep1)
+    * [ Adding Firebase Pods Dependencies to Your App ](#fstep2)
 * [ Create Users. ](#createusers)
 * [ Map Kit. ](#mapkit)
 
 <a name="authui"/>
+
 ### Login And Registation UI
 
 1. create sigle view application
@@ -851,4 +854,21 @@ let alreadyHaveAccountButton: UIButton = {
 ```
 
 <a name="firebase"/>
-### Setup Firebase, Create Users and Work with MapKit
+
+### Setup Firebase
+
+<a name="fstep1"/>
+
+#### Setting up Your Firebase Account
+
+Head over to Firebase Console and create a new project (name it as you wish). Once you’ve created a new Firebase project, go to its Firebase Dashboard, by simply clicking on it in Firebase. You should be landing on this screen:
+
+Below the centered title, press on the “Add app” button and add a new iOS app to your project. For the bundle ID, you can use “io.instamobile.FirebaseStarterApp“, which is the Bundle ID of our starter project. If you’d prefer to use your own bundle ID, make sure you update the Bundle Identifier in Xcode (“General” tab of the FirebaseStarterApp build target)
+
+Once registered, Firebase will generate a GoogleService-Info.plist file, which you need to download and add to your project in Xcode.
+
+That’s it – you now have a Firebase iOS project that can be used from within the Swift code. Let’s see how.
+
+<a name="fstep2"/>
+
+#### Adding Firebase Pods Dependencies to Your App
