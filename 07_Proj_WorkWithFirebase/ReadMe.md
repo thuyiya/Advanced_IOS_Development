@@ -1,5 +1,8 @@
-##Taxi App
-####Taxi app using firebase without storyboard
+## Taxi App
+#### Taxi app using firebase without storyboard
+
+
+### Lets Start From Login View
 
 1. create sigle view application
 2. Create 5 group folders in project root clicking on project root foler 'New Group'
@@ -320,4 +323,49 @@ private lazy var emailContainerView: UIView = {
         
         return view
     }()
+```
+31. lets add password containerView
+```swift
+...
+
+private lazy var passwordContainerView: UIView = {
+        let view = UIView()
+        
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "ic_lock_outline_white_2x")
+        imageView.alpha = 0.87
+        view.addSubview(imageView)
+        imageView.centerY(inView: view)
+        imageView.anchor(left: view.leftAnchor, paddingLeft: 8, width: 24, height: 24)
+        
+        view.addSubview(passwordTextFiled)
+        passwordTextFiled.centerY(inView: view)
+        passwordTextFiled.anchor(left: imageView.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, paddingBottom: 8)
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = .lightGray
+        view.addSubview(separatorView)
+        separatorView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, height: 0.75)
+        
+        return view
+    }()
+    ...
+
+    private let passwordTextFiled: UIView = {
+        let tf = UITextField()
+        tf.borderStyle = .none
+        tf.font = UIFont.systemFont(ofSize: 16)
+        tf.textColor = .white
+        tf.keyboardAppearance = .dark
+        tf.isSecureTextEntry = true
+        tf.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        return tf
+    }()
+    ...
+
+    view.addSubview(passwordContainerView)
+        passwordContainerView.anchor(top: emailContainerView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 16, paddingLeft: 16, paddingRight: 16, height: 50)
+        
+    ...
 ```
