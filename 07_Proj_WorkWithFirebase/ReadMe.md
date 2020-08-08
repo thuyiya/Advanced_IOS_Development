@@ -91,3 +91,68 @@ class LoginViewController: UIViewController {
     }
     ...
 ```
+16. Lets create extentions for uis - common uiview handller to organize all view related code
+17. 
+```
+import UIKit
+
+extension UIView {
+    func anchor(top: NSLayoutYAxisAnchor? = nil,
+                left: NSLayoutXAxisAnchor? = nil,
+                bottom: NSLayoutYAxisAnchor? = nil,
+                right: NSLayoutXAxisAnchor? = nil,
+                paddingTop: CGFloat = 0,
+                paddingLeft: CGFloat = 0,
+                paddingBottom: CGFloat = 0,
+                paddingRight: CGFloat = 0,
+                height: CGFloat? = nil,
+                width: CGFloat? = nil
+    ) {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
+        }
+        
+        if let left = left {
+            leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        }
+        
+        if let right = right {
+            rightAnchor.constraint(equalTo: right, constant: -paddingTop).isActive = true
+        }
+        
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
+        }
+        
+        if let width = width {
+            widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        
+        if let height = height {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        
+    }
+    
+    func centerX(inView view: UIView) {
+        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+}
+```
+18. lets use our extention and lets re postion our title label view
+```
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = UIColor.init(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
+        
+        view.addSubview(titleLabel)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
+        titleLabel.centerX(inView: view)
+    }
+
+```
+19. 
