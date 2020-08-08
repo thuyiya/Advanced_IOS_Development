@@ -8,6 +8,10 @@
 * [ Create Users. ](#createusers)
 * [ Home Controler. ](#apphome)
 * [ Map Kit. ](#mapkit)
+    * [ Configure Map Kit. ](#mapkit)
+    * [ Setup User Location Services. ](#userlocationservices)
+    * [ Location input user interface. ](#locationinputuserinterface)
+    * [ Fetch user data with firebase. ](#fetchuserdatawithfirebase)
 
 <a name="authui"/>
 
@@ -1094,6 +1098,8 @@ with success login print and success registation print of your code
 
 ### Work with map
 
+#### configure
+
  MapKit is a powerful API available on iOS devices that makes it easy to display maps, mark locations, enhance with custom data and even draw routes or other shapes on top.
 
  1. lets add Map to your app. Before everything import MapKit to your code
@@ -1146,5 +1152,26 @@ guard let controller = UIApplication.shared.keyWindow?.rootViewController as? Ho
             self.dismiss(animated: true, completion: nil)
 ```
 
-4. 
+<a name="userlocationservices"/>
 
+#### Setup User Location Services
+
+1. First of all we have to work with location manager to auth with location data,  then share location and update the user location. before that when we requesting sensitive data from user we have get permission from users. There is 2, 3 type of ways we can ask permission from the user
+
+2. Open user plist file and add Privecy settings description. add new row and find "Privacy - Location When In Use Usage Description" and add the discription to it
+
+3. add new row and add "Privacy - Location Always and When In Use Usage Description" also you have to add "Privacy - Location Always Usage Description"
+
+4. When you do that user will get more options to give permission to his location
+
+5. And then lets add the location manager to your home page `private let locationManager = CLLocationManager()` This will promt our users to allow us to access their location
+
+6. 
+
+<a name="locationinputuserinterface"/>
+
+#### Location input user interface
+
+<a name="fetchuserdatawithfirebase"/>
+
+#### Fetch user data with firebase
