@@ -1,8 +1,11 @@
 ## Taxi App
 #### Taxi app using firebase without storyboard
 
+* [ Auth UI. ](#authui)
+* [ Setup Firebase. ](#firebase)
 
-### Lets Start From Login View
+<a name="authui"/>
+### Login And Registation UI
 
 1. create sigle view application
 2. Create 5 group folders in project root clicking on project root foler 'New Group'
@@ -844,3 +847,6 @@ let alreadyHaveAccountButton: UIButton = {
 
 ...
 ```
+
+<a name="firebase"/>
+### Setup Firebase, Create Users and Work with MapKit
