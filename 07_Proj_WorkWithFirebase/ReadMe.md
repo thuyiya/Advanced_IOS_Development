@@ -12,6 +12,10 @@
 
 ### Login And Registation UI
 
+![](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signin.png | width=320)
+
+![](https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/signup.png | width=320)
+
 1. create sigle view application
 2. Create 5 group folders in project root clicking on project root foler 'New Group'
 3. Name them as Model, View, Controller, Service and Utils
@@ -872,3 +876,19 @@ That’s it – you now have a Firebase iOS project that can be used from within
 <a name="fstep2"/>
 
 #### Adding Firebase Pods Dependencies to Your App
+
+In order to query the Firebase project from within your iOS app, we need to use the Firebase iOS SDKs, which are a set of libraries provided by Google, to make it easy for iOS developer to use Firebase in their app. These Swift SDKs are basically bridging the communication of your iOS app with the Firebase backend.
+To add the Firebase SDKs to your app, just add cocoapods dependencies to the Podfile. Getting started with Cocoapods is out of scope for this tutorial, so if you’re not familiar with it, check out http://cocoapods.org.
+Open the Podfile file, and add the following lines:
+
+```pod
+
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
+
+```
+
+Once you do this, you need to run “pod update” in your terminal which will download the SDKs for you. A successful result will look like this in the terminal:
+
+
