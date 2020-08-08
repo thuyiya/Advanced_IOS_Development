@@ -16,6 +16,8 @@ class HomeViewController: UIViewController {
     private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
     
+    private let inputActivationUIView = LocationInputActivationUIView ()
+    
     // MARK: - Lifecycale
     
     override func viewDidLoad() {
@@ -52,6 +54,17 @@ class HomeViewController: UIViewController {
     
     func configureUI() {
         confugireMapView()
+        
+        view.addSubview(inputActivationUIView)
+        inputActivationUIView.centerX(inView: view)
+        inputActivationUIView.setDimensions(height: 50, width: view.frame.width - 64)
+        inputActivationUIView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationUIView.alpha = 0
+        inputActivationUIView.delegate = self
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationUIView.alpha = 1
+        }
     }
     
     func confugireMapView() {
@@ -90,5 +103,12 @@ extension HomeViewController: CLLocationManagerDelegate {
         if status == .authorizedWhenInUse {
             locationManager.requestAlwaysAuthorization()
         }
+    }
+}
+
+
+extension HomeViewController: LocationInputActivationUIViewDelegate {
+    func presentLocationInputView() {
+        print("DEBUG: LocationInputActivationUIViewDelegate called")
     }
 }

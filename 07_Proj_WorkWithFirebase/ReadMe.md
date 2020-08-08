@@ -1287,6 +1287,157 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 #### Location input user interface
 
+1. Lets Create Where to button on top of mapview. Lets create Location Input Activation View class in view folder
+```swift
+class LocationInputActivationUIView: UIView {
+
+   // MARK: - Properties
+    
+    private let indicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        
+        return view
+    }()
+    
+    private let placeholderLable: UILabel = {
+        let label = UILabel()
+        label.text = "Where to?"
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = .darkGray
+        
+        return label
+    }()
+    
+   // MARK: - LifeCycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .white
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.45
+        layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+        layer.masksToBounds = false
+        
+        addSubview(indicatorView)
+        indicatorView.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 16)
+        indicatorView.setDimensions(height: 6, width: 6)
+        
+        addSubview(placeholderLable)
+        placeholderLable.centerY(inView: self, leftAnchor: indicatorView.rightAnchor, paddingLeft: 20)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+```
+
+2. to setup dimentions of the views lets create set dimention func in extentions
+```swift
+func setDimensions(height: CGFloat, width: CGFloat) {
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: height).isActive = true
+        widthAnchor.constraint(equalToConstant: width).isActive = true
+    }
+```
+
+3. and also lets make our centerY function to left padding
+```swift
+func centerY(inView view: UIView, leftAnchor: NSLayoutXAxisAnchor? = nil, paddingLeft: CGFloat = 0, constant: CGFloat = 0) {
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
+        
+        if let left = leftAnchor {
+            anchor(left: left, paddingLeft: paddingLeft)
+        }
+    }
+```
+
+4. Now you can add them to home view controller
+```swift
+private let inputActivationUIView = LocationInputActivationUIView ()
+...
+func configureUI() {
+        confugireMapView()
+        
+        view.addSubview(inputActivationUIView)
+        inputActivationUIView.centerX(inView: view)
+        inputActivationUIView.setDimensions(height: 50, width: view.frame.width - 64)
+        inputActivationUIView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+    }
+
+```
+
+5. You can also add nice ui aprear animation to this view when map load. add that to `configureUI()`
+```swift
+inputActivationUIView.alpha = 0
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationUIView.alpha = 1
+        }
+```
+6. lets add `UITapGestureRecognizer` to give acction to this view when user tap on it
+```swift
+let tap = UITapGestureRecognizer(target: self, action: #selector(handleShowLocationInputView))
+        addGestureRecognizer(tap)
+
+...
+
+// MARK: - Selectors
+    
+    @objc func handleShowLocationInputView() {
+        
+    }
+```
+
+7. But this method we have to access form home view controller, so lets create delegete method to access that
+```swift
+import UIKit
+
+protocol LocationInputActivationUIViewDelegate: class {
+    func presentLocationInputView()
+}
+
+class LocationInputActivationUIView: UIView {
+
+   // MARK: - Properties
+    
+    weak var delegate: LocationInputActivationUIViewDelegate?
+
+...
+
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(presentLocationInputView))
+        addGestureRecognizer(tap)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func presentLocationInputView() {
+        delegate?.presentLocationInputView()
+    }
+    
+
+```
+
+8. lets callback that function to home view controller
+```swift
+...
+inputActivationUIView.delegate = self
+...
+extension HomeViewController: LocationInputActivationUIViewDelegate {
+    func presentLocationInputView() {
+        print("DEBUG: LocationInputActivationUIViewDelegate called")
+    }
+}
+```
+
 <a name="fetchuserdatawithfirebase"/>
 
 #### Fetch user data with firebase
