@@ -473,3 +473,23 @@ let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainer
 
 ...
 ```
+38. create login button
+```swift
+    private let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log In", for: .normal)
+        button.setTitleColor(UIColor(white: 1, alpha: 0.5), for: .normal)
+        button.backgroundColor = .blue
+        button.layer.cornerRadius = 5
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        return button
+    }()
+
+```
+39. lets add that to our stack view
+```swift
+...
+let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
+...
+```
