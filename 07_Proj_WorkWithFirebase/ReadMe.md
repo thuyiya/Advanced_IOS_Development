@@ -904,3 +904,20 @@ Once you do this, you need to run “pod update” in your terminal which will d
 
 <img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/podinstall.png" alt="Kitten"
 	title="A cute kitten" width="420" />
+
+To check whether this was successful, let’s see if we can use Firebase dependencies in the code now. Open up AppDelegate.swift and add this import:
+
+```swift
+import Firebase
+...
+```
+
+Then, add this line as the first line of the application:didFinishLaunchingWithOptions: method:
+```swift
+...
+FirebaseApp.configure()
+
+...
+```
+This builds and runs successfully in Xcode. We’re done here and ready to jump into action.
+
