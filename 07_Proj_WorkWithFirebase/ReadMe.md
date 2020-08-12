@@ -1438,6 +1438,50 @@ extension HomeViewController: LocationInputActivationUIViewDelegate {
 }
 ```
 
+<a name="locationinputview"/>
+
+#### Location Input View
+
+image of location input
+
+1. create view
+2. lets create back button
+3. create common function for add shadow
+4. now lets confure location input view in `HomeController`
+5. create configureLocationInputView function, before that create ref of inputview
+6. lets create animation get aprea the input view, this time lets get the animation complition callback to render the table view of place data
+```swift
+func configureLocationInputView () {
+        view.addSubview(locationInputView)
+        locationInputView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 200)
+        locationInputView.alpha = 0
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.locationInputView.alpha = 1
+        }) { _ in
+            print("DEBUG: Present table view")
+        }
+    }
+```
+7. then lets configure location view inside `presentLocationInputView`
+8. Lets add delegate for dissmiss this location input field
+9. then lets create the LocationInputViewDelegate inside of the homecontroller extentions
+10. lets dissmiss our view in `dismissLocationInputView`
+```swift
+extension HomeViewController: LocationInputViewDelegate {
+    func dismissLocationInputView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+        }) { _ in
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+}
+
+```
+
 <a name="fetchuserdatawithfirebase"/>
 
 #### Fetch user data with firebase
