@@ -23,9 +23,9 @@ class HomeViewController: UIViewController {
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     
-    private var fullName: String? {
+    private var user: User? {
         didSet {
-            locationInputView.titleLabel.text = fullName
+            locationInputView.user = user
         }
     }
     
@@ -47,7 +47,7 @@ class HomeViewController: UIViewController {
     
     func fetchUserData() {
         Service.shared.fetchUserData { (user) in
-            self.fullName = user.fullName
+            self.user = user
         }
     }
     

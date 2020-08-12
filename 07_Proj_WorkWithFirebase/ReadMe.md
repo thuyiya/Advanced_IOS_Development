@@ -13,7 +13,7 @@
     * [ Location input user interface. ](#locationinputuserinterface)
     * [ Location Input View. ](#locationinputview)
     * [ Fetch user data with firebase. ](#fetchuserdatawithfirebase)
-
+    * [ Display Nearby Drivers on map. ](#nearbydrivers)
 
 <a name="authui"/>
 
@@ -2092,10 +2092,30 @@ struct Service {
 in our home controller lets get full name from model
 
 ```swift
+...
+    private var user: User? {
+        didSet {
+            locationInputView.user = user
+        }
+    }
+...
+
     func fetchUserData() {
         Service.shared.fetchUserData { (user) in
-            self.fullName = user.fullName
+            self.user = user
         }
     }
 ```
-9. 
+
+in locationInputView
+```swift 
+// MARK: - Properties
+    
+    var user: User? {
+        didSet { titleLabel.text = user?.fullName }
+    }
+```
+
+<a name="nearbydrivers"/>
+
+#### Display Nearby Drivers on map
