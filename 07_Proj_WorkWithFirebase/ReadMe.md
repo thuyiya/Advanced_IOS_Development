@@ -1289,7 +1289,10 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 #### Location input user interface
 
-1. Lets Create Where to button on top of mapview. Lets create Location Input Activation View class in view folder
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/locationinputbutton.png" alt="Kitten"
+	title="A cute kitten" width="240" />
+
+1. Lets Create 'Where to?' button on top of mapview. Lets create Location Input Activation View class in view folder
 ```swift
 class LocationInputActivationUIView: UIView {
 
@@ -1444,7 +1447,8 @@ extension HomeViewController: LocationInputActivationUIViewDelegate {
 
 #### Location Input View
 
-image of location input
+<img src="https://raw.githubusercontent.com/thuyiya/advanced_iOS_development/master/07_Proj_WorkWithFirebase/Docs/locationinput.png" alt="Kitten"
+	title="A cute kitten" width="240" />
 
 1. create view
 ```swift
@@ -1852,9 +1856,80 @@ func configureTableView() {
 ```
 29. Now lets call the `configureTableView` end of the `configureUI` method
 30. Now if you run this this will not show the table view that because its in all the way down, you can see that by changing `tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)` y axis value
-31. lets animate the table view once you click the input button
+31. lets animate the table view once you click the input button, so we can present our table view inside of the completion of animation in `configureLocationInputView` function. lets replace `print("DEBUG: Present table view")`
 ```swift
+    self.tableView.frame.origin.y = self.locationInputViewHeight
 ```
+32. so lets add animation to it
+```swift
+    self.tableView.frame.origin.y = self.locationInputViewHeight
+```
+33. there is small problem when we configure the configureLocationInputView, becuase everytime when we call it. its adding the `locationInputView` to the view. so we can fixed it by remove it from super view
+```swift
+extension HomeViewController: LocationInputViewDelegate {
+    func dismissLocationInputView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+        }) { _ in
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+}
+
+```
+34. now we have to remove out table view when we come back from input location view.
+```swift
+    extension HomeViewController: LocationInputViewDelegate {
+    func dismissLocationInputView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+        }) { _ in
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+}
+```
+35. lets setup the cell of the table view
+```swift
+ class LocationTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.text = "Dr samarapala perera road"
+        return label
+    }()
+    
+    private var addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .lightGray
+        label.text = "Dr samarapala perera road, Boralasgamuwa"
+        return label
+    }()
+
+```
+36. then lets add them to the cell inside of the init
+```swift
+let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
+        stack.distribution = .fillEqually
+        stack.axis = .vertical
+        stack.spacing = 4
+        
+        addSubview(stack)
+        stack.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 8)    }
+```
+37. then we have to set the lab
+
+
 
 <a name="fetchuserdatawithfirebase"/>
 
