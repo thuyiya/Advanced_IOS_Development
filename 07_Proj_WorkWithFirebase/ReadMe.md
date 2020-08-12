@@ -2256,6 +2256,28 @@ class SignUpViewController: UIViewController {
 
     ...
 
+    // MARK: - Helper Function
+    
+    func uploadUserDataAndShowHomeController(uid: String, values: [String: Any]) {
+        REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+            
+            //handle error
+            
+            let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+            
+            guard let controller = keyWindow?.rootViewController as? HomeViewController else { return }
+            controller.configureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    ...
+
     @objc func handleSignUp() {
         guard let email = emailTextFiled.text else { return }
         guard let password = passwordTextFiled.text else { return }
@@ -2282,12 +2304,14 @@ class SignUpViewController: UIViewController {
                 guard let location = self.location else { return }
                 
                 geoFire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
-                    //do stuff in here
+                   self.uploadUserDataAndShowHomeController(uid: uid, values: values)
                 })
             }
-
+            
+            self.uploadUserDataAndShowHomeController(uid: uid, values: values)
 ...
 ```
 
-7. 
+7. then lets run and create a driver
+8. 
 

@@ -100,6 +100,25 @@ class SignUpViewController: UIViewController {
     
     // MARK: - Helper Function
     
+    func uploadUserDataAndShowHomeController(uid: String, values: [String: Any]) {
+        REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+            
+            //handle error
+            
+            let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+            
+            guard let controller = keyWindow?.rootViewController as? HomeViewController else { return }
+            controller.configureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     func configureUI() {
         view.backgroundColor = .backgroundColor
         
@@ -144,31 +163,16 @@ class SignUpViewController: UIViewController {
             ] as [String : Any]
             
             if accountType == 1 {
-                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
                 
                 guard let location = self.location else { return }
                 
                 geoFire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
-                    //do stuff in here
+                    self.uploadUserDataAndShowHomeController(uid: uid, values: values)
                 })
             }
             
-            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
-                
-                //handle error
-                
-                let keyWindow = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .map({$0 as? UIWindowScene})
-                .compactMap({$0})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first
-                
-                guard let controller = keyWindow?.rootViewController as? HomeViewController else { return }
-                controller.configureUI()
-                
-                self.dismiss(animated: true, completion: nil)
-            }
+            self.uploadUserDataAndShowHomeController(uid: uid, values: values)
         }
     }
     
