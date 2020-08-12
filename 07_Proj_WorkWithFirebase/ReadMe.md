@@ -1760,10 +1760,101 @@ addSubview(linkingView)
         linkingView.centerX(inView: startLocationIndicatorView)
 ```
 20. lets see what we got, run the project
-21. 
+21. Now lets create the table view bellow our `LocationInputView` insde of `HomeViewController`. lets create ref and function for confugire table view
+```swift
+// MARK: - Properties
+...
+    private let tableView = UITableView()
+...
 
+    func configureTableView() {
+        
+    }
+```
+22. lets set the datasoure and delegate, inside `configureTableView`
+```swift
+    tableView.delegate = self
+    tableView.dataSource = self
+```
+23. for that we have to inherite the delegate
+```swift
+// MARK: - UITableViewDelegate/DataSource
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+}
+```
+24. now we have to create `LocationTableViewCell` lets create new file in view
+```swift
+class LocationTableViewCell: UITableViewCell {
 
+    // MARK: - Properties
+    
+    
+    // MARK: - Lifecycle
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+```
+25. lets register the table view cell to tableview. 
+```swift
+    func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+```
+26. then lets define this `reuseIdentifier` top of the class
+```swift
+private let reuseIdentifier = "LocationCell"
+```
+27. lets add the table view cell to `cellForRowAt`
+```swift
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationTableViewCell
+        
+        return cell
+    }
+    
+    
+}
+
+```
+28. then now we have to give table view hight. but we have to remove `locationInputView` Height from the table view first we set it as 200 before, so lets make a variable to keep that value as const `private final let locationInputViewHeight: CGFloat = 200`
+then lets update the height inside `configureLocationInputView` and remove  locationInputViewHeight from table view
+```swift
+func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 60
+        tableView.tableFooterView = UIView()
+        
+        let height = view.frame.height - locationInputViewHeight
+        tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
+        
+        view.addSubview(tableView)
+    }
+```
+29. Now lets call the `configureTableView` end of the `configureUI` method
+30. Now if you run this this will not show the table view that because its in all the way down, you can see that by changing `tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)` y axis value
+31. lets animate the table view once you click the input button
+```swift
+```
 
 <a name="fetchuserdatawithfirebase"/>
 

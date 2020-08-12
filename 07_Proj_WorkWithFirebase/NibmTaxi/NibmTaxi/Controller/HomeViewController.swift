@@ -10,6 +10,9 @@ import UIKit
 import Firebase
 import MapKit
 
+private let reuseIdentifier = "LocationCell"
+
+
 class HomeViewController: UIViewController {
     // MARK: - Properties
     
@@ -18,6 +21,9 @@ class HomeViewController: UIViewController {
     
     private let inputActivationUIView = LocationInputActivationUIView ()
     private let locationInputView = LocationInputView()
+    private let tableView = UITableView()
+    
+    private final let locationInputViewHeight: CGFloat = 200
     
     // MARK: - Lifecycale
     
@@ -66,6 +72,8 @@ class HomeViewController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.inputActivationUIView.alpha = 1
         }
+        
+        configureTableView()
     }
     
     func confugireMapView() {
@@ -80,7 +88,7 @@ class HomeViewController: UIViewController {
         locationInputView.delegate = self
         
         view.addSubview(locationInputView)
-        locationInputView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 200)
+        locationInputView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: locationInputViewHeight)
         locationInputView.alpha = 0
         
         UIView.animate(withDuration: 0.5, animations: {
@@ -88,6 +96,20 @@ class HomeViewController: UIViewController {
         }) { _ in
             print("DEBUG: Present table view")
         }
+    }
+    
+    func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 60
+        tableView.tableFooterView = UIView()
+        
+        let height = view.frame.height - locationInputViewHeight
+        tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
+        
+        view.addSubview(tableView)
     }
 }
 
@@ -130,6 +152,8 @@ extension HomeViewController: LocationInputActivationUIViewDelegate {
     }
 }
 
+// MARK: - LocationInputViewDelegate
+
 extension HomeViewController: LocationInputViewDelegate {
     func dismissLocationInputView() {
         UIView.animate(withDuration: 0.3, animations: {
@@ -140,4 +164,20 @@ extension HomeViewController: LocationInputViewDelegate {
             }
         }
     }
+}
+
+// MARK: - UITableViewDelegate/DataSource
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationTableViewCell
+        
+        return cell
+    }
+    
+    
 }
