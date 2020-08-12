@@ -11,7 +11,9 @@
     * [ Configure Map Kit. ](#mapkit)
     * [ Setup User Location Services. ](#userlocationservices)
     * [ Location input user interface. ](#locationinputuserinterface)
+    * [ Location Input View. ](#locationinputview)
     * [ Fetch user data with firebase. ](#fetchuserdatawithfirebase)
+
 
 <a name="authui"/>
 
