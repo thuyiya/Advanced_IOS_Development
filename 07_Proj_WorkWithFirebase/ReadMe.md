@@ -1927,10 +1927,83 @@ let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
         addSubview(stack)
         stack.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 8)    }
 ```
-37. then we have to set the lab
+37. then lets make the section for each by two and results
+```swift
+// MARK: - UITableViewDelegate/DataSource
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "hello"
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 2
+        }
+        
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationTableViewCell
+        
+        return cell
+    }
+}
+
+```
 
 
 <a name="fetchuserdatawithfirebase"/>
 
 #### Fetch user data with firebase
+
+1. Lets create our `Service.swift` class and work with api to get user related data
+```swift
+import Firebase
+
+struct Service {
+    func fetchUserData() {
+        print("DEBUG: fetch User Data")
+    }
+}
+
+```
+2. lets call that function insde home controller
+```swift
+//MARK: API
+    
+    func fetchUserData() {
+        Service().fetchUserData()
+    }
+    
+```
+3. everytime When we call service, it will call new ref everytime. but we can create one instance of it and call it everytime. we can do it by creating ref as instance variable. but its not the best way. if we do that we have to do it evey file. when we try to call it. Best way is lets make it as sigalton
+
+```swift
+import Firebase
+
+struct Service {
+    
+    static let shared = Service()
+    
+    func fetchUserData() {
+        print("DEBUG: fetch User Data")
+    }
+}
+
+```
+4. then you can call it inside home controller
+```swift
+//MARK: API
+    
+    func fetchUserData() {
+        Service.shared.fetchUserData()
+    }
+    
+```
+5. 

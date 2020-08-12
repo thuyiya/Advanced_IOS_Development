@@ -31,11 +31,17 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         checkIsUserLoggedIn()
         enableLocationServices()
+        fetchUserData()
+        
         //        signOut()
         view.backgroundColor = .white
     }
     
     //MARK: API
+    
+    func fetchUserData() {
+        Service.shared.fetchUserData()
+    }
     
     func checkIsUserLoggedIn() {
         if(Auth.auth().currentUser?.uid == nil) {
@@ -173,8 +179,16 @@ extension HomeViewController: LocationInputViewDelegate {
 // MARK: - UITableViewDelegate/DataSource
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "hello"
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return section == 0 ? 2 : 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -182,6 +196,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    
 }

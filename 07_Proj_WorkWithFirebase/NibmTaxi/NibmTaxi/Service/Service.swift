@@ -6,4 +6,13 @@
 //  Copyright © 2020 nibm. All rights reserved.
 //
 
-import Foundation
+import Firebase
+
+struct Service {
+    
+    static let shared = Service()
+    
+    func fetchUserData() {
+        print("DEBUG: fetch User Data")
+    }
+}
