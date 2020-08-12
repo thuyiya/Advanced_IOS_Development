@@ -1445,10 +1445,77 @@ extension HomeViewController: LocationInputActivationUIViewDelegate {
 image of location input
 
 1. create view
+```swift
+
+class LocationInputView: UIView {
+
+    // MARK: - Properties
+    
+    // MARK: - Init
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Selectors
+    
+    
+    // MARK: - Helper Functions
+    
+}
+
+```
 2. lets create back button
-3. create common function for add shadow
-4. now lets confure location input view in `HomeController`
-5. create configureLocationInputView function, before that create ref of inputview
+```swift
+private let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleBackTapped), for: .touchUpInside)
+        return button
+    }()
+
+    ...
+    override init(frame: CGRect) {
+            backgroundColor = .white
+            
+            addSubview(backButton)
+            backButton.anchor(top: topAnchor, left: leftAnchor, paddingTop: 44,
+                            paddingLeft: 12, width: 24, height: 24)
+    }
+
+    ...
+
+    // MARK: - Selectors
+    
+    @objc func handleBackTapped() {
+        
+    }
+
+```
+
+3. create common function for add shadow, go to extentions create func in uiview, then call `addShadow` inside LocationInputView init 
+```swift
+    func addShadow() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.55
+        layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+        layer.masksToBounds = false
+    }
+```
+4. now lets configure location input view in `HomeController`
+```swift
+private let locationInputView = LocationInputView()
+```
+5. create configureLocationInputView function below `confugireMapView` func
+```swift
+func configureLocationInputView () {
+        
+    }
+```
 6. lets create animation get aprea the input view, this time lets get the animation complition callback to render the table view of place data
 ```swift
 func configureLocationInputView () {
@@ -1464,8 +1531,67 @@ func configureLocationInputView () {
     }
 ```
 7. then lets configure location view inside `presentLocationInputView`
-8. Lets add delegate for dissmiss this location input field
-9. then lets create the LocationInputViewDelegate inside of the homecontroller extentions
+```swift
+// MARK: - LocationInputActivationUIViewDelegate
+
+extension HomeViewController: LocationInputActivationUIViewDelegate {
+    func presentLocationInputView() {
+        inputActivationUIView.alpha = 0
+        configureLocationInputView()
+    }
+}
+```
+8. Lets add delegate for dissmiss this location input field. go to the `LocationInputView`. then call it when click back button
+```swift
+protocol LocationInputViewDelegate {
+    func dismissLocationInputView()
+}
+
+class LocationInputView: UIView {
+
+    // MARK: - Properties
+    
+    var delegate: LocationInputViewDelegate?
+    
+...
+
+// MARK: - Selectors
+    
+    @objc func handleBackTapped() {
+        delegate?.dismissLocationInputView()
+    }
+
+....
+```
+9. then lets create the LocationInputViewDelegate inside of the `HomeViewController` extentions. and alos remember to make the `locationInputView` deligation inside of the `configureLocationInputView`
+```swift
+...
+func configureLocationInputView () {
+        locationInputView.delegate = self
+        
+        view.addSubview(locationInputView)
+        locationInputView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 200)
+        locationInputView.alpha = 0
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.locationInputView.alpha = 1
+        }) { _ in
+            print("DEBUG: Present table view")
+        }
+    }
+...
+extension HomeViewController: LocationInputViewDelegate {
+    func dismissLocationInputView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+        }) { _ in
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+}
+```
 10. lets dissmiss our view in `dismissLocationInputView`
 ```swift
 extension HomeViewController: LocationInputViewDelegate {
@@ -1481,6 +1607,161 @@ extension HomeViewController: LocationInputViewDelegate {
 }
 
 ```
+11. Lets add title and text field to our location input field. lets start with title
+```swift
+
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "NIBM"
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+
+```
+12. then lets add it to subview and run it, before that update your extention centerX and centerY with `translatesAutoresizingMaskIntoConstraints = false`. otherwise you will see nothing
+```swift
+ // MARK: - Helper Functions
+    
+    func configureViewComponents() {
+        backgroundColor = .white
+        addShadow()
+        
+        addSubview(backButton)
+        backButton.anchor(top: topAnchor, left: leftAnchor, paddingTop: 44,
+                          paddingLeft: 12, width: 24, height: 24)
+        
+        addSubview(titleLabel)
+        titleLabel.centerY(inView: backButton)
+        titleLabel.centerX(inView: self)
+    }
+```
+13. then lets create the connecting dot of the two location input field
+```swift
+ private let startLocationIndicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    private let linkingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        return view
+    }()
+    
+    private let destinationIndicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+```
+14. and then lets create text fields
+```swift
+lazy var startingLocationTextField: UITextField = {
+        let tf = UITextField()
+        
+        return tf
+    }()
+    
+    lazy var destinationTextField: UITextField = {
+        let tf = UITextField()
+        return tf
+    }()
+```
+15. lets make it look like the ui
+```swift
+lazy var startingLocationTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Current Location"
+        tf.backgroundColor = .groupTableViewBackground
+        tf.isEnabled = false
+        tf.font = UIFont.systemFont(ofSize: 14)
+        
+        tf.leftViewMode = .always
+        
+        return tf
+    }()
+    
+    lazy var destinationTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Enter a destination.."
+        tf.backgroundColor = UIColor.rgb(red: 215, green: 215, blue: 215)
+        tf.returnKeyType = .search
+        tf.font = UIFont.systemFont(ofSize: 14)
+        
+        tf.clearButtonMode = .whileEditing
+        return tf
+    }()
+```
+16. lets add that to view
+```swift
+addSubview(startingLocationTextField)
+        startingLocationTextField.anchor(top: backButton.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 40, paddingRight: 40, height: 30)
+
+addSubview(destinationTextField)
+        destinationTextField.anchor(top: startingLocationTextField.bottomAnchor, left: leftAnchor,
+                                    right: rightAnchor, paddingTop: 12, paddingLeft: 40,
+                                    paddingRight: 40,height: 30)
+```
+
+17. Then run it, if all gose well you will see we need to add small padding before text type start in inputfield to look better. so lets update our ui inout fields
+
+```swift
+lazy var startingLocationTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Current Location"
+        tf.backgroundColor = .groupTableViewBackground
+        tf.isEnabled = false
+        tf.font = UIFont.systemFont(ofSize: 14)
+        
+        let paddingView = UIView()
+        paddingView.setDimensions(height: 30, width: 8)
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        
+        return tf
+    }()
+    
+    lazy var destinationTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Enter a destination.."
+        tf.backgroundColor = UIColor.rgb(red: 215, green: 215, blue: 215)
+        tf.returnKeyType = .search
+        tf.font = UIFont.systemFont(ofSize: 14)
+        let paddingView = UIView()
+        paddingView.setDimensions(height: 30, width: 8)
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        tf.clearButtonMode = .whileEditing
+        return tf
+    }()
+```
+
+18. lets add `startLocationIndicatorView` and `destinationIndicatorView`
+```swift
+addSubview(startLocationIndicatorView)
+        startLocationIndicatorView.centerY(inView: startingLocationTextField, leftAnchor: leftAnchor, paddingLeft: 20)
+        startLocationIndicatorView.setDimensions(height: 6, width: 6)
+        startLocationIndicatorView.layer.cornerRadius = 6 / 2
+        
+        addSubview(destinationIndicatorView)
+        destinationIndicatorView.centerY(inView: destinationTextField, leftAnchor: leftAnchor, paddingLeft: 20)
+        destinationIndicatorView.setDimensions(height: 6, width: 6)
+```
+19. lets link these indicators
+```swift
+addSubview(linkingView)
+        linkingView.anchor(top: startLocationIndicatorView.bottomAnchor,
+                           bottom: destinationIndicatorView.topAnchor, paddingTop: 4,
+                           paddingLeft: 0, paddingBottom: 4, width: 0.5)
+        linkingView.centerX(inView: startLocationIndicatorView)
+```
+20. lets see what we got, run the project
+21. 
+
+
+
 
 <a name="fetchuserdatawithfirebase"/>
 
