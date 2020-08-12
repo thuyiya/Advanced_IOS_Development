@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
         checkIsUserLoggedIn()
         enableLocationServices()
         fetchUserData()
+        fetchDrivers()
         
         //        signOut()
         view.backgroundColor = .white
@@ -46,8 +47,18 @@ class HomeViewController: UIViewController {
     //MARK: API
     
     func fetchUserData() {
-        Service.shared.fetchUserData { (user) in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        Service.shared.fetchUserData(uid: currentUid) { (user) in
             self.user = user
+        }
+    }
+    
+    func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        
+        Service.shared.fetchDriversLocation(location: location) { (user) in
+            print("DEBUG: drive \(user.location)")
         }
     }
     

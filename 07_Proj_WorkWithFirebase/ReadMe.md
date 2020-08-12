@@ -2313,5 +2313,118 @@ class SignUpViewController: UIViewController {
 ```
 
 7. then lets run and create a driver
-8. 
+8. Lets get nearest drivers in service
+```swift
+func fetchDriversLocation(location: CLLocation) {
+        let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+        
+        REF_DRIVER_LOCATIONS.observe(.value) { (snapshot) in
+            geoFire.query(at: location, withRadius: 50).observe(.keyEntered, with: { (uid, location) in
+                print("DEBUG: Uid is \(uid)")
+                print("DEBUG: location coordinate is \(location.coordinate)")
+            })
+        }
+    }
+```
+9. lets call it in home controller
+```swift
+override func viewDidLoad() {
+        super.viewDidLoad()
+        checkIsUserLoggedIn()
+        enableLocationServices()
+        fetchUserData()
+        fetchDrivers()
+        
+        //        signOut()
+        view.backgroundColor = .white
+    }
+    
+    //MARK: API
+    
+    func fetchUserData() {
+        Service.shared.fetchUserData { (user) in
+            self.user = user
+        }
+    }
+    
+    func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        
+        Service.shared.fetchDriversLocation(location: location)
+    }
+```
+10. lets fetch any user data
 
+Service
+```swift
+func fetchUserData(uid: String, completion: @escaping(User) -> Void) {
+        REF_USERS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let user = User(dictionary: dictionary)
+            completion(user)
+        }
+    }
+```
+
+HomeController
+```swift
+//MARK: API
+    
+    func fetchUserData() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        Service.shared.fetchUserData(uid: currentUid) { (user) in
+            self.user = user
+        }
+    }
+```
+
+11. lets set the driver location
+
+model
+```swift
+import CoreLocation
+
+struct User {
+    let fullName: String
+    let email: String
+    let accountType: Int
+    var location: CLLocation?
+    
+    init(dictionary: [String: Any]) {
+        self.fullName = dictionary["fullName"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        self.accountType = dictionary["accountType"] as? Int ?? 0
+    }
+}
+
+```
+
+homecontroller
+```swift
+    func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        
+        Service.shared.fetchDriversLocation(location: location) { (user) in
+            print("DEBUG: drive \(user.location)")
+        }
+    }
+
+
+```
+service
+```swift
+func fetchDriversLocation(location: CLLocation, completion: @escaping(User) -> Void) {
+        let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+        
+        REF_DRIVER_LOCATIONS.observe(.value) { (snapshot) in
+            geoFire.query(at: location, withRadius: 50).observe(.keyEntered, with: { (uid, location) in
+                self.fetchUserData(uid: uid) { (user) in
+                    var driver = user
+                    driver.location = location
+                    completion(driver)
+                }
+            })
+        }
+    }
+```
