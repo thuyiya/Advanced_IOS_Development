@@ -8,9 +8,12 @@
 
 import UIKit
 import Firebase
+import GeoFire
 
 class SignUpViewController: UIViewController {
     // MARK: - Properties
+    
+    private var location = LocationHandler.shared.locationManager.location
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -92,6 +95,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        
     }
     
     // MARK: - Helper Function
@@ -134,12 +138,22 @@ class SignUpViewController: UIViewController {
             guard let uid = result?.user.uid else { return }
             
             let values = [
-                "email": email,
-                "fullName": fullName,
-                "accountType": accountType
-                ] as [String : Any]
+            "email": email,
+            "fullName": fullName,
+            "accountType": accountType
+            ] as [String : Any]
             
-            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
+            if accountType == 1 {
+                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                
+                guard let location = self.location else { return }
+                
+                geoFire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
+                    //do stuff in here
+                })
+            }
+            
+            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
                 
                 //handle error
                 

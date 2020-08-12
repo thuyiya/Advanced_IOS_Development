@@ -2119,3 +2119,175 @@ in locationInputView
 <a name="nearbydrivers"/>
 
 #### Display Nearby Drivers on map
+
+lets add driver locations to the database, for that we have to get location when user start to register to the application. then we have to make our location manager accesible from anyware
+
+1. so lets work with firebase Geofire
+
+SignUpViewController
+```swift
+import GeoFire
+...
+@objc func handleSignUp() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        guard let fullName = fullNameTextFiled.text else { return }
+        let accountType = accountTypeSegmentedControl.selectedSegmentIndex
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Faild to register user with error \(error)")
+                return
+            }
+            
+            guard let uid = result?.user.uid else { return }
+            
+            let values = [
+            "email": email,
+            "fullName": fullName,
+            "accountType": accountType
+            ] as [String : Any]
+            
+            if accountType == 1 {
+                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                <!-- geoFire.setLocation(<#T##location: CLLocation##CLLocation#>, forKey: uid, withCompletionBlock: { (error) in
+                    //do stuff in here
+                }) -->
+            }
+        ...
+```
+
+and create location ref in service `let REF_DRIVER_LOCATIONS = DB_REF.child("driver-locations")`
+
+2. then lets create `LocationHandler` file inside of the utils
+```swift
+import CoreLocation
+
+class LocationHandler: NSObject, CLLocationManagerDelegate {
+    static let shared = LocationHandler()
+    var locationManager: CLLocationManager!
+    var location: CLLocation?
+    
+    override init() {
+        super.init()
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+    }
+    
+}
+```
+3. lets remove location stuff from home controller and add them to location handler
+
+LocationHandler
+
+```swift
+func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+        }
+    }
+```
+
+HomeViewController
+
+```swift
+...
+private let locationManager = LocationHandler.shared.locationManager
+...
+// MARK: - LocationServices
+
+// MARK: - LocationServices
+
+extension HomeViewController {
+    
+    func enableLocationServices() {
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager?.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedWhenInUse:
+            locationManager?.requestAlwaysAuthorization()
+        case .authorizedAlways:
+            locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        default:
+            break
+        }
+    }
+    
+    
+}
+
+```
+
+4. lets print the user locartion in signup page
+```swift
+ let sharedLocationanager = LocationHandler.shared.locationManager
+        print("DEBUG: Locaion is \(sharedLocationanager?.location
+```
+5. if you got crash when you try to logout, lets remove the current uid
+```swift
+
+struct Service {
+    static let shared = Service()
+    
+    func fetchUserData(completion: @escaping(User) -> Void) {
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERS.child(currentUid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let user = User(dictionary: dictionary)
+            completion(user)
+        }
+    }
+}
+
+```
+6. lets set the loication in sigup controller
+```swift
+class SignUpViewController: UIViewController {
+    // MARK: - Properties
+    
+    private var location = LocationHandler.shared.locationManager.location
+
+    ...
+
+    @objc func handleSignUp() {
+        guard let email = emailTextFiled.text else { return }
+        guard let password = passwordTextFiled.text else { return }
+        guard let fullName = fullNameTextFiled.text else { return }
+        let accountType = accountTypeSegmentedControl.selectedSegmentIndex
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Faild to register user with error \(error)")
+                return
+            }
+            
+            guard let uid = result?.user.uid else { return }
+            
+            let values = [
+            "email": email,
+            "fullName": fullName,
+            "accountType": accountType
+            ] as [String : Any]
+            
+            if accountType == 1 {
+                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                
+                guard let location = self.location else { return }
+                
+                geoFire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
+                    //do stuff in here
+                })
+            }
+
+...
+```
+
+7. 
+

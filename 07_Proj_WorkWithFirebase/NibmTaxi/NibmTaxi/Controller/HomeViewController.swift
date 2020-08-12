@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private let mapView = MKMapView()
-    private let locationManager = CLLocationManager()
+    private let locationManager = LocationHandler.shared.locationManager
     
     private let inputActivationUIView = LocationInputActivationUIView ()
     private let locationInputView = LocationInputView()
@@ -66,6 +66,11 @@ class HomeViewController: UIViewController {
     func signOut() {
         do {
             try Auth.auth().signOut()
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
         } catch {
             print("DEBUG: sign out error")
         }
@@ -131,30 +136,22 @@ class HomeViewController: UIViewController {
 
 // MARK: - LocationServices
 
-extension HomeViewController: CLLocationManagerDelegate {
+extension HomeViewController {
     
     func enableLocationServices() {
         
-        locationManager.delegate = self
-        
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
+            locationManager?.requestWhenInUseAuthorization()
         case .restricted, .denied:
             break
         case .authorizedWhenInUse:
-            locationManager.requestAlwaysAuthorization()
+            locationManager?.requestAlwaysAuthorization()
         case .authorizedAlways:
-            locationManager.startUpdatingLocation()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         default:
             break
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestAlwaysAuthorization()
         }
     }
 }
