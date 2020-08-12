@@ -2028,4 +2028,74 @@ struct Service {
 }
 
 ```
-6. 
+6. lets get the full name of user and set inputlocation view title as it is
+```swift
+func fetchUserData(completion: @escaping(String) -> Void) {
+        REF_USERS.child(currentUid!).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let fullname = dictionary["fullName"] as? String else { return }
+            completion(fullname)
+        }
+    }
+
+```
+```swift
+...
+ private var fullName: String? {
+        didSet {
+            locationInputView.titleLabel.text = fullName
+        }
+    }
+    ...
+//MARK: API
+    
+    func fetchUserData() {
+        Service.shared.fetchUserData { (fullName) in
+            self.fullName = fullName
+        }
+    }
+
+
+```
+7. Lets create model for user. it will be easy for construct the details
+```swift
+struct User {
+    let fullName: String
+    let email: String
+    let accountType: Int
+    
+    init(dictionary: [String: Any]) {
+        self.fullName = dictionary["fullName"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        self.accountType = dictionary["accountType"] as? Int ?? 0
+    }
+}
+
+```
+8. now lets return user unless firstname
+```swift
+struct Service {
+    static let shared = Service()
+    let currentUid = Auth.auth().currentUser?.uid
+    
+    func fetchUserData(completion: @escaping(User) -> Void) {
+        REF_USERS.child(currentUid!).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let user = User(dictionary: dictionary)
+            completion(user)
+        }
+    }
+}
+
+```
+
+in our home controller lets get full name from model
+
+```swift
+    func fetchUserData() {
+        Service.shared.fetchUserData { (user) in
+            self.fullName = user.fullName
+        }
+    }
+```
+9. 

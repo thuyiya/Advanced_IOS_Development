@@ -23,6 +23,12 @@ class HomeViewController: UIViewController {
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     
+    private var fullName: String? {
+        didSet {
+            locationInputView.titleLabel.text = fullName
+        }
+    }
+    
     private final let locationInputViewHeight: CGFloat = 200
     
     // MARK: - Lifecycale
@@ -40,7 +46,9 @@ class HomeViewController: UIViewController {
     //MARK: API
     
     func fetchUserData() {
-        Service.shared.fetchUserData()
+        Service.shared.fetchUserData { (user) in
+            self.fullName = user.fullName
+        }
     }
     
     func checkIsUserLoggedIn() {
