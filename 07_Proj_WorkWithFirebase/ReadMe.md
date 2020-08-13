@@ -13,7 +13,8 @@
     * [ Location input user interface. ](#locationinputuserinterface)
     * [ Location Input View. ](#locationinputview)
     * [ Fetch user data with firebase. ](#fetchuserdatawithfirebase)
-    * [ Display Nearby Drivers on map. ](#nearbydrivers)
+    * [ Get Nearby Drivers. ](#nearbydrivers)
+    * [ Drivers on map. ](#diplaydriversonmap)
 
 <a name="authui"/>
 
@@ -2412,7 +2413,8 @@ homecontroller
 
 
 ```
-service
+service/ get drivers frim 50 radius 
+
 ```swift
 func fetchDriversLocation(location: CLLocation, completion: @escaping(User) -> Void) {
         let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
@@ -2428,3 +2430,103 @@ func fetchDriversLocation(location: CLLocation, completion: @escaping(User) -> V
         }
     }
 ```
+
+<a name="diplaydriversonmap"/>
+
+#### Display the drivers on map
+
+1. lets create a file for  `DriverAnnotation` in model class
+```swift
+import MapKit
+
+class DriverAnnotation: NSObject, MKAnnotation {
+    dynamic var coordinate: CLLocationCoordinate2D
+    var uid: String
+    
+    init(uid: String, coordinate: CLLocationCoordinate2D) {
+        self.uid = uid
+        self.coordinate = coordinate
+    }
+    
+}
+```
+2. And the setup the annotation for dirvers
+```swift
+func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        
+        Service.shared.fetchDriversLocation(location: location) { (driver) in
+            guard let coordinate = driver.location?.coordinate else { return }
+            let annotation = DriverAnnotation(uid: driver.uid, coordinate: coordinate)
+        }
+    }
+```
+3. get driver uid from ussr model we have update the model
+```swift
+struct User {
+    let fullName: String
+    let email: String
+    let accountType: Int
+    var location: CLLocation?
+    let uid: String
+    
+    init(uid: String, dictionary: [String: Any]) {
+        self.uid = uid
+        self.fullName = dictionary["fullName"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        self.accountType = dictionary["accountType"] as? Int ?? 0
+    }
+}
+
+```
+4. lets update the uid when set users in Service
+```swift
+func fetchUserData(uid: String, completion: @escaping(User) -> Void) {
+        REF_USERS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            let user = User(uid: uid, dictionary: dictionary)
+            completion(user)
+        }
+    }
+
+```
+5. but there is small problem. this will add same user twice. this happen when we use observe method in firebase, everytime when change the database this will call the add anotation with new coords. lets fix that
+
+lets create custom anotation, lets make the delagation inside `confugireMapView`
+
+```swift
+mapView.delegate = self
+```
+6. 
+then create the `// MARK: - LocationServices` the delegation
+
+```swift
+// MARK: - MKMapViewDelegate
+
+extension HomeViewController: MKMapViewDelegate {
+    
+}
+
+```
+7. lets replace the driver pin
+
+```swift
+private let annotationIdentifier = "DriverAnnotation"
+...
+// MARK: - MKMapViewDelegate
+
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? DriverAnnotation {
+            let view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            view.image = #imageLiteral(resourceName: "chevron-sign-to-right")
+            return view
+
+        }
+        
+        return nil
+    }
+}
+```
+8. 
