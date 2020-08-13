@@ -89,7 +89,7 @@ class LoginViewController: UIViewController {
             .filter({$0.isKeyWindow}).first
             
             guard let controller = keyWindow?.rootViewController as? HomeViewController else { return }
-            controller.configureUI()
+            controller.configure()
             
             self.dismiss(animated: true, completion: nil)
         }

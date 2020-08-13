@@ -37,10 +37,9 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         checkIsUserLoggedIn()
         enableLocationServices()
-        fetchUserData()
-        fetchDrivers()
         
-        //        signOut()
+        
+        //            signOut()
         view.backgroundColor = .white
     }
     
@@ -89,7 +88,7 @@ class HomeViewController: UIViewController {
                 self.present(nav, animated: true, completion: nil)
             }
         } else {
-            configureUI()
+            configure()
         }
     }
     
@@ -107,6 +106,12 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Helper Function
+    
+    func configure() {
+        configureUI()
+        fetchUserData()
+        fetchDrivers()
+    }
     
     func configureUI() {
         confugireMapView()
@@ -208,11 +213,16 @@ extension HomeViewController: LocationInputActivationUIViewDelegate {
         inputActivationUIView.alpha = 0
         configureLocationInputView()
     }
+    
 }
 
 // MARK: - LocationInputViewDelegate
 
 extension HomeViewController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        print("DEBUG: query is \(query)")
+    }
+    
     func dismissLocationInputView() {
         UIView.animate(withDuration: 0.3, animations: {
             self.locationInputView.alpha = 0

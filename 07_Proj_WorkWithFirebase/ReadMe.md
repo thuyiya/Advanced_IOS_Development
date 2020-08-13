@@ -16,6 +16,7 @@
     * [ Get Nearby Drivers. ](#nearbydrivers)
     * [ Drivers on map. ](#diplaydriversonmap)
     * [ Updaet driver position real time. ](#updaetdriverpositionrealtime)
+    * [ Search and Display Location. ](#searchanddisplay)
 
 <a name="authui"/>
 
@@ -2589,3 +2590,73 @@ return self.mapView.annotations.contains { (annotation) -> Bool in
 
 you can test this by changin location numbers from realtimedatabase
 
+<a name="searchanddisplay"/>
+
+#### Search and Display Locations
+
+1. now when we login 
+```swift
+checkIsUserLoggedIn()
+        enableLocationServices()
+        fetchUserData()
+        fetchDrivers()
+```
+these function are not going to call, so lets meke it happen
+
+lets remove `fetchUserData()` and `fetchDrivers()` from viewdid load, then creaet new function to run
+
+```swift
+// MARK: - Helper Function
+    
+    func configure() {
+        configureUI()
+        fetchUserData()
+        fetchDrivers()
+    }
+```
+
+then call it inisde of the check user
+```swift
+func checkIsUserLoggedIn() {
+        if(Auth.auth().currentUser?.uid == nil) {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } else {
+            configure()
+        }
+    }
+```
+remeber to update login and signup controller `configureUI` to `configure`
+
+2. Lets search location. for that we need to on change event of the ui text field. 
+```swift
+protocol LocationInputViewDelegate {
+    func dismissLocationInputView()
+    func executeSearch(query: String)
+}
+
+
+...
+
+extension LocationInputView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let query = textField.text else { return false }
+        delegate?.executeSearch(query: query)
+        return true
+    }
+}
+```
+
+```swift
+// MARK: - LocationInputViewDelegate
+
+extension HomeViewController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        print("DEBUG: query is \(query)")
+    }
+
+```
+3. 
