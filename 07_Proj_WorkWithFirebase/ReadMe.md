@@ -15,6 +15,7 @@
     * [ Fetch user data with firebase. ](#fetchuserdatawithfirebase)
     * [ Get Nearby Drivers. ](#nearbydrivers)
     * [ Drivers on map. ](#diplaydriversonmap)
+    * [ Updaet driver position real time. ](#updaetdriverpositionrealtime)
 
 <a name="authui"/>
 
@@ -2529,4 +2530,62 @@ extension HomeViewController: MKMapViewDelegate {
     }
 }
 ```
-8. 
+
+<a name="updaetdriverpositionrealtime"/>
+
+#### Updaet driver position real time
+
+1. Haddle update driver position without create new pin (annotation)
+```swift
+func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        
+        Service.shared.fetchDriversLocation(location: location) { (driver) in
+            guard let coordinate = driver.location?.coordinate else { return }
+            let annotation = DriverAnnotation(uid: driver.uid, coordinate: coordinate)
+            
+            var driverIsVisible: Bool {
+                
+                return self.mapView.annotations.contains { (annotation) -> Bool in
+                    guard let driverAnno = annotation as? DriverAnnotation else { return false }
+                    
+                    if driverAnno.uid == driver.uid {
+                        print("DEBUG: Haddle update driver position")
+                        return true
+                    }
+                    
+                    return false
+                }
+            }
+            
+            if !driverIsVisible {
+                self.mapView.addAnnotation(annotation)
+            }
+        }
+    }
+```
+2. lets update it realtime, for that lets create function inside the driverlocation model
+```swift
+func updateAnnotationPosition(withCoordinate coordinate: CLLocationCoordinate2D) {
+        UIView.animate(withDuration: 0.2) {
+            self.coordinate = coordinate
+        }
+    }
+```
+inside fetchDrivers lets update it. when you update the modal value from outside. that varibale shoud be dynamic, otherwise you will not get the change
+
+```swift
+return self.mapView.annotations.contains { (annotation) -> Bool in
+                    guard let driverAnno = annotation as? DriverAnnotation else { return false }
+                    
+                    if driverAnno.uid == driver.uid {
+                        driverAnno.updateAnnotationPosition(withCoordinate: coordinate)
+                        return true
+                    }
+                    
+                    return false
+
+```
+
+you can test this by changin location numbers from realtimedatabase
+
