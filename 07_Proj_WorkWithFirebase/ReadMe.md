@@ -17,6 +17,7 @@
     * [ Drivers on map. ](#diplaydriversonmap)
     * [ Updaet driver position real time. ](#updaetdriverpositionrealtime)
     * [ Search and Display Location. ](#searchanddisplay)
+    * [ Side Menu. ](#sidemenu)
 
 <a name="authui"/>
 
@@ -2659,4 +2660,176 @@ extension HomeViewController: LocationInputViewDelegate {
     }
 
 ```
-3. 
+3. lets search location, lete create private extention to hom view controller
+```swift
+//MARK: - Map Helper Functions
+
+private extension HomeViewController {
+    func searchBy(naturalLanguageQuery: String, completion: @escaping([MKPlacemark]) -> Void) {
+        var results = [MKPlacemark]()
+        
+        let request = MKLocalSearch.Request()
+        request.region = mapView.region
+        request.naturalLanguageQuery = naturalLanguageQuery
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            guard let response = response else { return }
+            
+            response.mapItems.forEach({ item in
+                results.append(item.placemark)
+            })
+            
+            completion(results)
+        }
+    }
+}
+
+...
+// MARK: - LocationInputViewDelegate
+
+extension HomeViewController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        searchBy(naturalLanguageQuery: query) { (results) in
+            self.searchResults = results
+            self.tableView.reloadData()
+        }
+    }
+    
+    func dismissLocationInputView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+        }) { _ in
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+}
+...
+// MARK: - UITableViewDelegate/DataSource
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "hello"
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 2 : searchResults.count
+    }
+    
+
+
+```
+3. Lets Populating Cells With Location Data & Custom MKPlacemark Extension
+```swift
+
+class LocationTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
+    var placemark: MKPlacemark? {
+        didSet {
+            titleLabel.text = placemark?.name
+           // addressLabel.text = placemark?.address
+           addressLabel.text = placemark?.title
+        }
+    }
+
+```
+
+in home controller, add to cell forrawat
+```swift
+
+if indexPath.section == 1 {
+            cell.placemark = searchResults[indexPath.row]
+        }
+```
+
+4. lets create address for MKPlacemark in extentions go to MKPlacemark and create import mapkit
+```swift
+extension MKPlacemark {
+    var address: String? {
+        get {
+            guard let subThoroughfare = subThoroughfare else { return nil }
+            guard let thoroughfare = thoroughfare else { return nil }
+            guard let locality = locality else { return nil }
+            guard let adminArea = administrativeArea else { return nil }
+            
+            return "\(subThoroughfare) \(thoroughfare), \(locality), \(adminArea) "
+        }
+    }
+}
+
+```
+5. lets display the selected location with pin (annotation)
+
+lets select the cell first, when you select one cell this table should dissmiss
+
+```swift
+func dismissLocationView(completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }, completion: completion)
+    }
+...
+// MARK: - LocationInputViewDelegate
+
+extension HomeViewController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        searchBy(naturalLanguageQuery: query) { (results) in
+            self.searchResults = results
+            self.tableView.reloadData()
+        }
+    }
+    
+    func dismissLocationInputView() {
+        dismissLocationView()
+    }
+}
+
+...
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        print("DEBUG: selectedPlacemark \(selectedPlacemark.address)")
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        
+        dismissLocationView { _ in
+            
+        }
+    }
+
+
+```
+6. let work with select cell
+```swift
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        print("DEBUG: selectedPlacemark \(selectedPlacemark.address)")
+        
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+        }
+    }
+
+```
+
+
+<a name="sidemenu"/>
+
+#### Side Menu

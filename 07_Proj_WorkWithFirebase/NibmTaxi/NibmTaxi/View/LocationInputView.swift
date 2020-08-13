@@ -76,12 +76,11 @@ class LocationInputView: UIView {
         tf.backgroundColor = UIColor.rgb(red: 215, green: 215, blue: 215)
         tf.returnKeyType = .search
         tf.font = UIFont.systemFont(ofSize: 14)
-        tf.delegate = self
-        
         let paddingView = UIView()
         paddingView.setDimensions(height: 30, width: 8)
         tf.leftView = paddingView
         tf.leftViewMode = .always
+        tf.delegate = self
         tf.clearButtonMode = .whileEditing
         return tf
     }()

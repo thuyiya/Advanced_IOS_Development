@@ -4,10 +4,17 @@ import MapKit
 class LocationTableViewCell: UITableViewCell {
     
     // MARK: - Properties
+    
+    var placemark: MKPlacemark? {
+        didSet {
+            titleLabel.text = placemark?.name
+            addressLabel.text = placemark?.title
+        }
+    }
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "Dr samarapala perera road"
         return label
     }()
     
@@ -15,7 +22,6 @@ class LocationTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
-        label.text = "Dr samarapala perera road, Boralasgamuwa"
         return label
     }()
     
