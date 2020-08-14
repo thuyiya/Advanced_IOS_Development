@@ -24,6 +24,7 @@
 		1F75C05A24E3F87800A075A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C05924E3F87800A075A4 /* User.swift */; };
 		1F75C05C24E4009100A075A4 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C05B24E4009100A075A4 /* LocationHandler.swift */; };
 		1F75C05E24E493D300A075A4 /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C05D24E493D300A075A4 /* DriverAnnotation.swift */; };
+		1F75C06024E6364500A075A4 /* RideActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C05F24E6364500A075A4 /* RideActionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		1F75C05924E3F87800A075A4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1F75C05B24E4009100A075A4 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		1F75C05D24E493D300A075A4 /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
+		1F75C05F24E6364500A075A4 /* RideActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideActionView.swift; sourceTree = "<group>"; };
 		7B758BC23DC9DA353A83C71C /* Pods-NibmTaxi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NibmTaxi.release.xcconfig"; path = "Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi.release.xcconfig"; sourceTree = "<group>"; };
 		CECEAB41504B89C079E39470 /* Pods_NibmTaxi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NibmTaxi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7081C0D4B0F5A71CCE16F4E /* Pods-NibmTaxi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NibmTaxi.debug.xcconfig"; path = "Target Support Files/Pods-NibmTaxi/Pods-NibmTaxi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				1F6BC4D824DF0DB30035543A /* LocationInputActivationUIView.swift */,
 				1F75C05324E3C3E500A075A4 /* LocationInputView.swift */,
 				1F75C05524E3DB3300A075A4 /* LocationTableViewCell.swift */,
+				1F75C05F24E6364500A075A4 /* RideActionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				1F75C05824E3EF1B00A075A4 /* Service.swift in Sources */,
 				1F75C05424E3C3E500A075A4 /* LocationInputView.swift in Sources */,
 				1F36737D24DEDBFD00C3C1B5 /* HomeViewController.swift in Sources */,
+				1F75C06024E6364500A075A4 /* RideActionView.swift in Sources */,
 				1F75C05A24E3F87800A075A4 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

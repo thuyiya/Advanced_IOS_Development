@@ -3034,4 +3034,414 @@ func removeAnnotationsAndOverlays() {
         }
     }
 ```
-8. 
+8. zoom to fit relevent annotation
+```swift
+// MARK: - Selectors
+    
+    @objc func actionButtonPressed() {
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG: Show menu")
+            break
+        case .dismissActionView:
+            removeAnnotationsAndOverlays()
+            
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+                self.configureActionButton(config: .showMenu)
+            }
+            
+            mapView.showAnnotations(mapView.annotations, animated: true)
+            
+            break
+        }
+    }
+
+...
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        var annotations = [MKAnnotation]()
+        
+        configureActionButton(config: .dismissActionView)
+        
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
+        
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+            self.mapView.annotations.forEach { (annotation) in
+                if let anno = annotation as? MKUserLocation {
+                    annotations.append(anno)
+                }
+                
+                if let anno = annotation as? MKPointAnnotation {
+                    annotations.append(anno)
+                }
+            }
+            
+            self.mapView.showAnnotations(annotations, animated: true)
+
+        }
+        
+    }
+```
+9. lets refactor code little bit
+```swift
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+
+        configureActionButton(config: .dismissActionView)
+        
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
+        
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+            let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            self.mapView.showAnnotations(annotations, animated: true)
+
+        }
+        
+    }
+```
+10. lets create new view class for booking hover
+```swift
+class RideActionView: UIView {
+
+    class RideActionView: UIView {
+
+    // MARK: - Properties
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.text = "Test address title"
+        return label
+    }()
+    
+    private let addressLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.text = "123 B Street, Gewal Laga"
+        return label
+    }()
+    
+    // MARK: - Lifecycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .white
+        addShadow()
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
+        stack.axis = .vertical
+        stack.spacing = 4
+        stack.distribution = .fillEqually
+        
+        addSubview(stack)
+        stack.centerX(inView: self)
+        stack.anchor(top: topAnchor, paddingTop: 12)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+    
+}
+
+```
+
+home controller
+```swift
+...
+private let rideActionView = RideActionView()
+
+...
+func configureUI() {
+        confugireMapView()
+        configureRideActionView()
+
+...
+...
+    func configureRideActionView() {
+        view.addSubview(rideActionView)
+//        rideActionView.delegate = self
+        rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
+    }
+
+
+```
+11. let add button to action view
+```swift
+class RideActionView: UIView {
+
+    // MARK: - Properties
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.text = "Test address title"
+        return label
+    }()
+    
+    private let addressLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.text = "123 B Street, Gewal Laga"
+        return label
+    }()
+    
+    private lazy var infoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        
+        view.addSubview(infoViewLabel)
+        infoViewLabel.centerX(inView: view)
+        infoViewLabel.centerY(inView: view)
+        
+        return view
+    }()
+    
+    private let infoViewLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.textColor = .white
+        label.text = "X"
+        return label
+    }()
+    
+    private let uberInfoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "UberX"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .black
+        button.setTitle("CONFIRM UBERX", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Lifecycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .white
+        addShadow()
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
+        stack.axis = .vertical
+        stack.spacing = 4
+        stack.distribution = .fillEqually
+        
+        addSubview(stack)
+        stack.centerX(inView: self)
+        stack.anchor(top: topAnchor, paddingTop: 12)
+        
+        addSubview(infoView)
+        infoView.centerX(inView: self)
+        infoView.anchor(top: stack.bottomAnchor, paddingTop: 16)
+        infoView.setDimensions(height: 60, width: 60)
+        infoView.layer.cornerRadius = 60 / 2
+        
+        addSubview(uberInfoLabel)
+        uberInfoLabel.anchor(top: infoView.bottomAnchor, paddingTop: 8)
+        uberInfoLabel.centerX(inView: self)
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = .lightGray
+        addSubview(separatorView)
+        separatorView.anchor(top: uberInfoLabel.bottomAnchor, left: leftAnchor,
+                             right: rightAnchor, paddingTop: 4, height: 0.75)
+        
+        addSubview(actionButton)
+        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor,
+                            right: rightAnchor, paddingLeft: 12, paddingBottom: 12,
+                            paddingRight: 12, height: 50)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func actionButtonPressed() {
+        
+    }
+    
+    // MARK: - Helper Functions
+}
+
+```
+12. lets meke the animation for it
+```swift
+@objc func actionButtonPressed() {
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG: Show menu")
+            break
+        case .dismissActionView:
+            removeAnnotationsAndOverlays()
+            mapView.showAnnotations(mapView.annotations, animated: true)
+            
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+                self.configureActionButton(config: .showMenu)
+                self.animateRideActionView(shouldShow: false)
+            }
+            break
+        }
+    }
+    ...
+func configureRideActionView() {
+        view.addSubview(rideActionView)
+//        rideActionView.delegate = self
+        rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
+    }
+
+...
+func presentRideActionView(shouldShow: Bool) {
+        
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight : self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.rideActionView.frame.origin.y = yOrigin
+        }
+    }
+
+```
+13. then lets configure the destionation data
+```swift
+class RideActionView: UIView {
+
+    // MARK: - Properties
+    
+    var destination: MKPlacemark? {
+        didSet {
+            titleLabel.text = destination?.name
+            addressLabel.text = destination?.title
+        }
+    }
+
+```
+
+```swift
+func animateRideActionView(shouldShow: Bool, destination: MKPlacemark? = nil) {
+        
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight : self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.rideActionView.frame.origin.y = yOrigin
+        }
+        
+        if shouldShow {
+            if let destination = destination {
+                rideActionView.destination = destination
+            }
+        }
+    }
+
+
+...
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        
+        configureActionButton(config: .dismissActionView)
+        
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
+        
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+            let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            self.mapView.showAnnotations(annotations, animated: true)
+            
+            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
+        }
+        
+    }
+
+
+```
+14. zoom to fit the map, first of all lets create extension for MKMapView
+```swift
+extension MKMapView {
+    func zoomToFit(annotations: [MKAnnotation]) {
+        var zoomRect = MKMapRect.null
+        
+        annotations.forEach { (annotation) in
+            let annotationPoint = MKMapPoint(annotation.coordinate)
+            let pointRect = MKMapRect(x: annotationPoint.x, y: annotationPoint.y,
+                                      width: 0.01, height: 0.01)
+            zoomRect = zoomRect.union(pointRect)
+        }
+        
+        let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
+        setVisibleMapRect(zoomRect, edgePadding: insets, animated: true)
+    }
+    
+    func addAnnotationAndSelect(forCoordinate coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        addAnnotation(annotation)
+        selectAnnotation(annotation, animated: true)
+    }
+}
+
+```
+
+```swift
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        
+        configureActionButton(config: .dismissActionView)
+        
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
+        
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+            
+            let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            self.mapView.zoomToFit(annotations: annotations)
+            
+            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
+        }
+        
+    }
+
+```
