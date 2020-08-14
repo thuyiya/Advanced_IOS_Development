@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:NibmTaxi/Controller/PickupViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:NibmTaxi.xcodeproj">
    </FileRef>
    <FileRef
