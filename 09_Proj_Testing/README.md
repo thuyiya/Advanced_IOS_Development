@@ -101,7 +101,7 @@ sut.startNewGame()
 
 This creates a BullsEyeGame object at the class level, so all the tests in this test class can access the SUT object’s properties and methods.
 
-Here, you also call the game’s startNewGame(), which initializes the targetValue. Many of the tests will use targetValue to test that the game calculates the score correctly.
+Here, you also call the game’s startNewGame(), which initializes the targetValue. Many of the tests will use targetValue to test that th`e game calculates the score correctly.
 
 Before you forget, release your SUT object in tearDown(). Replace its contents with:
 
@@ -111,3 +111,5 @@ super.tearDown()
 ```
 
 Lets write your first test code...
+
+Ref: [Follow](https://www.raywenderlich.com/960290-ios-unit-testing-and-ui-testing-tutorial)
