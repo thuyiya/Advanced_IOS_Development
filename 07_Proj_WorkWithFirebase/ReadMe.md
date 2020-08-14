@@ -3813,3 +3813,96 @@ func configureUI() {
 <a name="fetchandaccept"/>
 
 #### Fetch and Accept Trips
+
+1. lets create service function for observe Current Trip
+```swift
+    private var user: User? {
+        didSet {
+            locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+                configureLocationInputActivationView()
+            } else {
+                Service.shared.observeTrips { trip in
+                    
+                }
+            }
+            
+        }
+    }
+
+```
+
+service
+```swift
+func observeTrips() {
+        REF_TRIPS.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            print("DEBUG: trips dictionary \(dictionary)")
+        }
+    }
+
+```
+2. lets construct that trips
+```swift
+func observeTrips(completion: @escaping(Trip) -> Void) {
+        REF_TRIPS.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            let trip = Trip(passengerUid: uid, dictionary: dictionary)
+            completion(trip)
+        }
+    }
+
+```
+
+```swift
+...
+} else {
+                Service.shared.observeTrips { trip in
+                    print("DEBUG: trips state \(trip.state)")
+                }
+            }
+
+...
+```
+3. lets create new function for it in home and var for hold trip
+```swift
+private var user: User? {
+        didSet {
+            locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+                configureLocationInputActivationView()
+            } else {
+                observeTrips()
+            }
+            
+        }
+    }
+
+private var trip: Trip? {
+        didSet {
+            guard let user = user else { return }
+            
+            if user.accountType == .driver {
+                guard let trip = trip else { return }
+                let controller = PickupController(trip: trip)
+                controller.modalPresentationStyle = .fullScreen
+                controller.delegate = self
+                self.present(controller, animated: true, completion: nil)
+            } else {
+                print("DEBUG: Show ride action view for accepted trip..")
+            }
+        }
+    }
+...
+    func observeTrips() {
+        Service.shared.observeTrips { trip in
+            self.trip = trip
+        }
+    }
+
+```
+
+4. lets pickup controller ui
