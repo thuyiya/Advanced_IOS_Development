@@ -37,19 +37,19 @@ The acronym FIRST describes a concise set of criteria for effective unit tests. 
 #### Unit Testing in Xcode
 
 Creating a Unit Test Target
-Open the NIBM project and press Command-6 to open the Test navigator.
+Open the BullsEye project and press Command-6 to open the Test navigator.
 
 Click the + button in the lower-left corner, then select New Unit Test Target… from the menu:
 
 <img src="https://koenig-media.raywenderlich.com/uploads/2016/12/TestNavigator1.png" alt="Kitten"
 	title="A cute kitten" width="320" />
 
-Accept the default name, NIBMTests. When the test bundle appears in the Test navigator, click to open the bundle in the editor. If the bundle doesn’t appear automatically, troubleshoot by clicking one of the other navigators, then return to the Test navigator.
+Accept the default name, BullsEyeTests. When the test bundle appears in the Test navigator, click to open the bundle in the editor. If the bundle doesn’t appear automatically, troubleshoot by clicking one of the other navigators, then return to the Test navigator.
 
 <img src="https://koenig-media.raywenderlich.com/uploads/2016/12/TestNavigator2.png" alt="Kitten"
 	title="A cute kitten" width="720" />
 
-The default template imports the testing framework, XCTest, and defines a `NIBMTests` subclass of `XCTestCase`, with `setUp()`, `tearDown()`, and example test methods.
+The default template imports the testing framework, XCTest, and defines a `BullsEyeTests` subclass of `XCTestCase`, with `setUp()`, `tearDown()`, and example test methods.
 
 There are three ways to run the tests:
 
@@ -73,9 +73,9 @@ You don’t need `testPerformanceExample()` or `testExample()` for this tutorial
 
 #### Using XCTAssert to Test Models
 
-First, you’ll use XCTAssert functions to test a core function of NIBM’s model: Does a NIBMGame object correctly calculate the score for a round?
+First, you’ll use XCTAssert functions to test a core function of BullsEye’s model: Does a BullsEyeGame object correctly calculate the score for a round?
 
-In `NIBMTests.swift`, add this line just below the `import` statement:
+In `BullsEyeTests.swift`, add this line just below the `import` statement:
 
 ```swift
 @testable import BullsEye
