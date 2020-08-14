@@ -41,6 +41,11 @@ class HomeViewController: UIViewController {
     private var user: User? {
         didSet {
             locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+                configureLocationInputActivationView()
+            }
+            
         }
     }
     
@@ -95,7 +100,6 @@ class HomeViewController: UIViewController {
     
     func fetchDrivers() {
         guard let location = locationManager?.location else { return }
-        
         Service.shared.fetchDriversLocation(location: location) { (driver) in
             guard let coordinate = driver.location?.coordinate else { return }
             let annotation = DriverAnnotation(uid: driver.uid, coordinate: coordinate)
@@ -161,7 +165,6 @@ class HomeViewController: UIViewController {
     func configure() {
         configureUI()
         fetchUserData()
-        fetchDrivers()
     }
     
     func configureUI() {
@@ -172,6 +175,11 @@ class HomeViewController: UIViewController {
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
         
+        
+        configureTableView()
+    }
+    
+    func configureLocationInputActivationView() {
         view.addSubview(inputActivationUIView)
         inputActivationUIView.centerX(inView: view)
         inputActivationUIView.setDimensions(height: 50, width: view.frame.width - 64)
@@ -182,8 +190,6 @@ class HomeViewController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.inputActivationUIView.alpha = 1
         }
-        
-        configureTableView()
     }
     
     func confugireMapView() {

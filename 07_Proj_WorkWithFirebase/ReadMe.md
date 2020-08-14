@@ -19,6 +19,8 @@
     * [ Search and Display Location. ](#searchanddisplay)
     * [ Side Menu. ](#sidemenu)
     * [ Driver side of the app, Requesting rides. ](#driverside)
+    * [ Fetch and Accept Trips. ](#fetchandaccept)
+
 
 <a name="authui"/>
 
@@ -3652,3 +3654,162 @@ ride action view
         delegate?.uploadTrip(self)
     }
 ```
+
+5. lets create custom trip object
+```swift
+import CoreLocation
+enum TripState: Int {
+    case requested
+    case denied
+    case accepted
+    case driverArrived
+    case inProgress
+    case arrivedAtDestination
+    case completed
+}
+
+struct Trip {
+    var pickupCoordinates: CLLocationCoordinate2D!
+    var destinationCoordinates: CLLocationCoordinate2D!
+    let passengerUid: String!
+    var driverUid: String?
+    var state: TripState!
+    
+    init(passengerUid: String, dictionary: [String: Any]) {
+        self.passengerUid = passengerUid
+        
+        if let pickupCoordinates = dictionary["pickupCoordinates"] as? NSArray {
+            guard let lat = pickupCoordinates[0] as? CLLocationDegrees else { return }
+            guard let long = pickupCoordinates[1] as? CLLocationDegrees else { return }
+            self.pickupCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        }
+        
+        if let destinationCoordinates = dictionary["destinationCoordinates"] as? NSArray {
+            guard let lat = destinationCoordinates[0] as? CLLocationDegrees else { return }
+            guard let long = destinationCoordinates[1] as? CLLocationDegrees else { return }
+            self.destinationCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        }
+        
+        self.driverUid = dictionary["driverUid"] as? String ?? ""
+
+        if let state = dictionary["state"] as? Int {
+            self.state = TripState(rawValue: state)
+        }
+    }
+}
+
+```
+
+6. lets upload the state as well
+```swift
+    func uploadTrip(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
+        let destinationArray = [destinationCoordinates.latitude, destinationCoordinates.longitude]
+        
+        et values = ["pickupCoordinates": pickupArray,
+        "destinationCoordinates": destinationArray,
+        "state": TripState.requested.rawValue] as [String : Any]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+    }
+
+```
+
+7. lets setup the driver side
+
+lets go to user class
+
+```swift
+import CoreLocation
+
+enum AccountType: Int {
+    case passenger
+    case driver
+}
+
+struct User {
+    let fullName: String
+    let email: String
+    var accountType: AccountType!
+    var location: CLLocation?
+    let uid: String
+    
+    init(uid: String, dictionary: [String: Any]) {
+        self.uid = uid
+        self.fullName = dictionary["fullName"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        
+        if let index = dictionary["accountType"] as? Int {
+            self.accountType = AccountType(rawValue: index)
+        }
+    }
+}
+```
+in home controller
+```swift
+    func fetchDrivers() {
+        guard user?.accountType == .passenger else { return }
+
+```
+
+but it will not work correctly, its taking time to load the data from backend. so lets remove code from here and add them after set the user. and also delete the `fetchDrivers` call from configureUI
+```swift
+private var user: User? {
+        didSet {
+            locationInputView.user = user
+            
+            if user?.accountType == .passenger {
+                fetchDrivers()
+            } else {
+                print("DEBUG: user is the driver")
+            }
+        }
+    }
+```
+
+8. we have to only load configureLocationInputActivationView if its passenger so lets separate in and call rite way
+```swift
+...
+private var user: User? {
+        didSet {
+            locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+                configureLocationInputActivationView()
+            }
+            
+        }
+    }
+...
+func configureUI() {
+        confugireMapView()
+        configureRideActionView()
+        
+        view.addSubview(actionButton)
+        actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
+        
+        
+        configureTableView()
+    }
+    
+    func configureLocationInputActivationView() {
+        view.addSubview(inputActivationUIView)
+        inputActivationUIView.centerX(inView: view)
+        inputActivationUIView.setDimensions(height: 50, width: view.frame.width - 64)
+        inputActivationUIView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
+        inputActivationUIView.alpha = 0
+        inputActivationUIView.delegate = self
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationUIView.alpha = 1
+        }
+    }
+```
+9. now you can sign out and log as passenger.
+
+<a name="fetchandaccept"/>
+
+#### Fetch and Accept Trips
