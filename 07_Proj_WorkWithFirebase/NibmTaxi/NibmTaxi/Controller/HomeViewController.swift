@@ -44,6 +44,7 @@ class HomeViewController: UIViewController {
             if user?.accountType == .passenger {
                 fetchDrivers()
                 configureLocationInputActivationView()
+                observeCurrentTrip()
             } else {
                 observeTrips()
             }
@@ -59,6 +60,7 @@ class HomeViewController: UIViewController {
                 guard let trip = trip else { return }
                 let controller = PickupController(trip: trip)
                 controller.modalPresentationStyle = .fullScreen
+                controller.delegate = self
                 self.present(controller, animated: true, completion: nil)
             } else {
                 print("DEBUG: Show ride action view for accepted trip..")
@@ -81,7 +83,7 @@ class HomeViewController: UIViewController {
         enableLocationServices()
         
         
-        //            signOut()
+//                    signOut()
         view.backgroundColor = .white
     }
     
@@ -106,6 +108,18 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: API
+    
+    func observeCurrentTrip() {
+        Service.shared.observeCurrentTrip { (trip) in
+            self.trip = trip
+            
+            guard let state = trip.state else { return }
+            
+            if state == .accepted {
+                self.shouldPresentLoadingView(false)
+            }
+        }
+    }
     
     func fetchUserData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -471,13 +485,17 @@ extension HomeViewController: RideActionViewDelegate {
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
         
+        shouldPresentLoadingView(true, message: "Finding your ride now")
+        
         Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (err, ref) in
             if let error = err {
                 print("DEBUG: Failed to upload trip with error \(error)")
                 return
             }
             
-            print("DEBUG: Success \(ref)")
+            UIView.animate(withDuration: 0.3, animations: {
+                self.rideActionView.frame.origin.y = self.view.frame.height
+            })
         }
     }
 }

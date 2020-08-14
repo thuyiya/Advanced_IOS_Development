@@ -13,7 +13,7 @@
 		1F430A7924DE470400FC5F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7824DE470400FC5F86 /* Assets.xcassets */; };
 		1F430A7C24DE470400FC5F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A7A24DE470400FC5F86 /* LaunchScreen.storyboard */; };
 		1F430A8924DE48E900FC5F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8824DE48E900FC5F86 /* LoginViewController.swift */; };
-		1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8A24DE5A8000FC5F86 /* extensions.swift */; };
+		1F430A8B24DE5A8000FC5F86 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8A24DE5A8000FC5F86 /* Extensions.swift */; };
 		1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */; };
 		1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */; };
 		1F430A9124DEB4A100FC5F86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F430A9024DEB4A100FC5F86 /* GoogleService-Info.plist */; };
@@ -37,7 +37,7 @@
 		1F430A7B24DE470400FC5F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F430A7D24DE470400FC5F86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F430A8824DE48E900FC5F86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		1F430A8A24DE5A8000FC5F86 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		1F430A8A24DE5A8000FC5F86 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1F430A8C24DE8E5600FC5F86 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F430A8E24DE9B1C00FC5F86 /* AuthButtonUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButtonUIButton.swift; sourceTree = "<group>"; };
 		1F430A9024DEB4A100FC5F86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		1F430A8324DE47D900FC5F86 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				1F430A8A24DE5A8000FC5F86 /* extensions.swift */,
+				1F430A8A24DE5A8000FC5F86 /* Extensions.swift */,
 				1F75C05B24E4009100A075A4 /* LocationHandler.swift */,
 			);
 			path = Utils;
@@ -295,7 +295,7 @@
 				1F75C05624E3DB3300A075A4 /* LocationTableViewCell.swift in Sources */,
 				1F430A8D24DE8E5600FC5F86 /* SignUpViewController.swift in Sources */,
 				1F430A8F24DE9B1C00FC5F86 /* AuthButtonUIButton.swift in Sources */,
-				1F430A8B24DE5A8000FC5F86 /* extensions.swift in Sources */,
+				1F430A8B24DE5A8000FC5F86 /* Extensions.swift in Sources */,
 				1F75C05824E3EF1B00A075A4 /* Service.swift in Sources */,
 				1F75C05424E3C3E500A075A4 /* LocationInputView.swift in Sources */,
 				1F36737D24DEDBFD00C3C1B5 /* HomeViewController.swift in Sources */,

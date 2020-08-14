@@ -4223,3 +4223,126 @@ extension HomeViewController: PickupControllerDelegate {
     }
 }
 ```
+12. lets check the passenger side when it in proccessing
+when it processing
+```swift
+extension UIViewController {
+    func shouldPresentLoadingView(_ present: Bool, message: String? = nil) {
+        if present {
+            let loadingView = UIView()
+            loadingView.frame = self.view.frame
+            loadingView.backgroundColor = .black
+            loadingView.alpha = 0
+            loadingView.tag = 1
+            
+            let indicator = UIActivityIndicatorView()
+            indicator.style = .large
+            indicator.center = view.center
+            
+            let label = UILabel()
+            label.text = message
+            label.font = UIFont.systemFont(ofSize: 20)
+            label.textColor = .white
+            label.textAlignment = .center
+            label.alpha = 0.87
+            
+            view.addSubview(loadingView)
+            loadingView.addSubview(indicator)
+            loadingView.addSubview(label)
+            
+            label.centerX(inView: view)
+            label.anchor(top: indicator.bottomAnchor, paddingTop: 32)
+            
+            indicator.startAnimating()
+            
+            UIView.animate(withDuration: 0.3) {
+                loadingView.alpha = 0.7
+            }
+        } else {
+            view.subviews.forEach { (subview) in
+                if subview.tag == 1 {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        subview.alpha = 0
+                    }, completion: { _ in
+                        subview.removeFromSuperview()
+                    })
+                }
+            }
+        }
+    }
+}
+
+```
+
+in home
+```swift
+// MARK: - RideActionViewDelegate
+
+extension HomeViewController: RideActionViewDelegate {
+    func uploadTrip(_ view: RideActionView) {
+        guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
+        guard let destinationCoordinates = view.destination?.coordinate else { return }
+        
+        shouldPresentLoadingView(true, message: "Finding your ride now")
+        
+        Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (err, ref) in
+            if let error = err {
+                print("DEBUG: Failed to upload trip with error \(error)")
+                return
+            }
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.rideActionView.frame.origin.y = self.view.frame.height
+            })
+        }
+    }
+}
+
+
+```
+
+13. now lets dismiss loading view. lets obeserve current trips as passenger
+```swift
+...
+private var user: User? {
+        didSet {
+            locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+                configureLocationInputActivationView()
+                observeCurrentTrip()
+            } else {
+                observeTrips()
+            }
+            
+        }
+    }
+...
+func observeCurrentTrip() {
+        Service.shared.observeCurrentTrip { (trip) in
+            self.trip = trip
+            
+            guard let state = trip.state else { return }
+            
+            if state == .accepted {
+                self.shouldPresentLoadingView(false)
+            }
+        }
+    }
+
+```
+
+in service
+```swift
+func observeCurrentTrip(completion: @escaping(Trip) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_TRIPS.child(uid).observe(.value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            let trip = Trip(passengerUid: uid, dictionary: dictionary)
+            completion(trip)
+        }
+    }
+```
+
