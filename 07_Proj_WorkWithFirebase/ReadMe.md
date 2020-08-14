@@ -2833,3 +2833,205 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 <a name="sidemenu"/>
 
 #### Side Menu
+
+1. lets create the action button
+```swift
+private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return button
+    }()
+...
+//MARK: - Selectors
+    
+    @objc func actionButtonPressed() {
+        print("DEBUG: click menu")
+    }
+
+...
+func configureUI() {
+        confugireMapView()
+        
+        view.addSubview(actionButton)
+        actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
+        
+        view.addSubview(inputActivationUIView)
+        inputActivationUIView.centerX(inView: view)
+        inputActivationUIView.setDimensions(height: 50, width: view.frame.width - 64)
+        inputActivationUIView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
+...
+
+func dismissLocationInputView() {
+        dismissLocationView { _ in
+            UIView.animate(withDuration: 0.5) {
+                self.inputActivationUIView.alpha = 1
+            }
+        }
+    }
+    ...
+
+        func dismissLocationView(completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+            self.locationInputView.removeFromSuperview()
+            
+        }, completion: completion)
+    }
+
+    ...
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        
+        actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp"), for: .normal)
+
+```
+2. as you can see one button going to do two things, lets make enum configaration
+
+```swift
+private enum ActionButtonConfiguration {
+    case showMenu
+    case dismissActionView
+    
+    init() {
+        self = .showMenu
+    }
+}
+
+...
+private var actionButtonConfig = ActionButtonConfiguration()
+...
+
+    @objc func actionButtonPressed() {
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG: Show menu")
+            break
+        case .dismissActionView:
+            print("DEBUG: Dismiss menu")
+            break
+        }
+    }
+
+```
+
+3. lets dissmiss the view
+```swift
+    @objc func actionButtonPressed() {
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG: Show menu")
+            break
+        case .dismissActionView:
+            print("DEBUG: Dismiss menu")
+            
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationUIView.alpha = 1
+                self.actionButton.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+                self.actionButtonConfig = .showMenu
+            }
+            break
+        }
+    }
+```
+4. lets recat little bit
+```swift
+
+// MARK: - Helper Function
+
+fileprivate func configureActionButton(config: ActionButtonConfiguration) {
+        switch config {
+        case .showMenu:
+            self.actionButton.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+            self.actionButtonConfig = .showMenu
+        case .dismissActionView:
+            actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+            actionButtonConfig = .dismissActionView
+        }
+    }
+```
+
+then replace it from diselectrow and actionbuttonpress `self.configureActionButton(config: .showMenu)`
+
+5. now lete delete the annotation if you hit back
+```swift
+  @objc func actionButtonPressed() {
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG: Show menu")
+            break
+        case .dismissActionView:
+            mapView.annotations.forEach { (annotation) in
+                if let anno = annotation as? MKPointAnnotation {
+                    mapView.removeAnnotation(anno)
+                }
+            }
+```
+6. lets genarate polyline
+```swift
+...
+private var route: MKRoute?
+...
+// MARK: - MapView Helper Functions
+...
+func generatePolyline(toDestination destination: MKMapItem) {
+    let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = destination
+        request.transportType = .automobile
+        
+        let directionRequest = MKDirections(request: request)
+        directionRequest.calculate { (response, error) in
+            guard let response = response else { return }
+            self.route = response.routes[0]
+            guard let polyline = self.route?.polyline else { return }
+            self.mapView.addOverlay(polyline)
+        }
+}
+```
+7. lets call set the polyline, inside didselectat. You will see nothing if "Directions Not Available" in your country
+```swift
+let destination = MKMapItem(placemark: selectedPlacemark)
+generatePolyline(toDestination: destination)
+
+...
+// MARK: - MKMapViewDelegate
+
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? DriverAnnotation {
+            let view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            view.image = #imageLiteral(resourceName: "chevron-sign-to-right")
+            return view
+        }
+        
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let route = self.route {
+            let polyline = route.polyline
+            let lineRenderer = MKPolylineRenderer(overlay: polyline)
+            lineRenderer.strokeColor = .mainBlueTint
+            lineRenderer.lineWidth = 4
+            return lineRenderer
+        }
+        return MKOverlayRenderer()
+    }
+}
+...
+func removeAnnotationsAndOverlays() {
+        mapView.annotations.forEach { (annotation) in
+            if let anno = annotation as? MKPointAnnotation {
+                mapView.removeAnnotation(anno)
+            }
+        }
+        
+        if mapView.overlays.count > 0 {
+            mapView.removeOverlay(mapView.overlays[0])
+        }
+    }
+```
+8. 
