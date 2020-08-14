@@ -8,6 +8,7 @@
 * [ What to Test. ](#whatis)
 * [ Best Practices for Testing. ](#bestpractice)
 * [ Unit Testing in Xcode. ](#unittesting)
+* [ Using XCTAssert to Test Models. ](#fristtest)
 
 
 #### What to Test
@@ -41,7 +42,7 @@ Open the NIBM project and press Command-6 to open the Test navigator.
 Click the + button in the lower-left corner, then select New Unit Test Target… from the menu:
 
 <img src="https://koenig-media.raywenderlich.com/uploads/2016/12/TestNavigator1.png" alt="Kitten"
-	title="A cute kitten" width="720" />
+	title="A cute kitten" width="320" />
 
 Accept the default name, NIBMTests. When the test bundle appears in the Test navigator, click to open the bundle in the editor. If the bundle doesn’t appear automatically, troubleshoot by clicking one of the other navigators, then return to the Test navigator.
 
@@ -57,4 +58,56 @@ There are three ways to run the tests:
 1. Click the diamond button in the gutter.
 
 <img src="https://koenig-media.raywenderlich.com/uploads/2016/12/TestNavigator3.png" alt="Kitten"
+	title="A cute kitten" width="320" />
+
+You can also run an individual test method by clicking its diamond, either in the Test navigator or in the gutter.
+
+Try the different ways to run tests to get a feeling for how long it takes and what it looks like. The sample tests don’t do anything yet, so they run really fast!
+
+When all the tests succeed, the diamonds will turn green and show check marks. You can click the gray diamond at the end of `testPerformanceExample()` to open the Performance Result:
+
+<img src="https://koenig-media.raywenderlich.com/uploads/2016/12/TestNavigator4.png" alt="Kitten"
 	title="A cute kitten" width="720" />
+
+You don’t need `testPerformanceExample()` or `testExample()` for this tutorial, so delete them.
+
+#### Using XCTAssert to Test Models
+
+First, you’ll use XCTAssert functions to test a core function of NIBM’s model: Does a NIBMGame object correctly calculate the score for a round?
+
+In `NIBMTests.swift`, add this line just below the `import` statement:
+
+```swift
+@testable import BullsEye
+```
+
+This gives the unit tests access to the internal types and functions in BullsEye.
+
+At the top of the BullsEyeTests class, add this property:
+
+
+```swift
+var sut: BullsEyeGame!
+```
+This creates a placeholder for a BullsEyeGame, which is the System Under Test (SUT), or the object this test case class is concerned with testing.
+
+Next, replace the contents of setup() with this:
+
+```swift
+super.setUp()
+sut = BullsEyeGame()
+sut.startNewGame()
+```
+
+This creates a BullsEyeGame object at the class level, so all the tests in this test class can access the SUT object’s properties and methods.
+
+Here, you also call the game’s startNewGame(), which initializes the targetValue. Many of the tests will use targetValue to test that the game calculates the score correctly.
+
+Before you forget, release your SUT object in tearDown(). Replace its contents with:
+
+```swift
+sut = nil
+super.tearDown()
+```
+
+Lets write your first test code...
