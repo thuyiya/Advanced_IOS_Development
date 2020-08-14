@@ -53,7 +53,16 @@ class HomeViewController: UIViewController {
     
     private var trip: Trip? {
         didSet {
-            print("DEBUG: show pick up passenger controller")
+            guard let user = user else { return }
+            
+            if user.accountType == .driver {
+                guard let trip = trip else { return }
+                let controller = PickupController(trip: trip)
+                controller.modalPresentationStyle = .fullScreen
+                self.present(controller, animated: true, completion: nil)
+            } else {
+                print("DEBUG: Show ride action view for accepted trip..")
+            }
         }
     }
     
@@ -470,5 +479,15 @@ extension HomeViewController: RideActionViewDelegate {
             
             print("DEBUG: Success \(ref)")
         }
+    }
+}
+
+// MARK: - PickupControllerDelegate
+
+extension HomeViewController: PickupControllerDelegate {
+    func didAcceptTrip(_ trip: Trip) {
+        self.trip = trip
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }
