@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+class Calculation {
+    func addNumbers(x: Int, y: Int) -> Int{
+        return x + y
+    }
+    
+    func mutipleNumbers(x: Int, y: Int) -> Int{
+        return x * y
+    }
+    
+    func divideNumers(x: Int, y: Int) -> Int{
+        return x/y
+    }
+}

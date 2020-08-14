@@ -14,6 +14,7 @@
 		1F82392724E7044D00C288BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F82392624E7044D00C288BD /* Assets.xcassets */; };
 		1F82392A24E7044D00C288BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F82392824E7044D00C288BD /* LaunchScreen.storyboard */; };
 		1F82393524E7044D00C288BD /* nibmdevelopmentoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82393424E7044D00C288BD /* nibmdevelopmentoneTests.swift */; };
+		1F82394024E7056400C288BD /* Calculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82393F24E7056400C288BD /* Calculation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		1F82393024E7044D00C288BD /* nibmdevelopmentoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nibmdevelopmentoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F82393424E7044D00C288BD /* nibmdevelopmentoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nibmdevelopmentoneTests.swift; sourceTree = "<group>"; };
 		1F82393624E7044D00C288BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F82393F24E7056400C288BD /* Calculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				1F82392624E7044D00C288BD /* Assets.xcassets */,
 				1F82392824E7044D00C288BD /* LaunchScreen.storyboard */,
 				1F82392B24E7044D00C288BD /* Info.plist */,
+				1F82393F24E7056400C288BD /* Calculation.swift */,
 			);
 			path = nibmdevelopmentone;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				1F82392224E7044A00C288BD /* ViewController.swift in Sources */,
 				1F82391E24E7044A00C288BD /* AppDelegate.swift in Sources */,
 				1F82392024E7044A00C288BD /* SceneDelegate.swift in Sources */,
+				1F82394024E7056400C288BD /* Calculation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
