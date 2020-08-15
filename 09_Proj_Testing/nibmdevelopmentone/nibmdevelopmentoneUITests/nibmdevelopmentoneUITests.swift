@@ -22,6 +22,20 @@ class nibmdevelopmentoneUITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testInvalidLogin_CredentialsAlertShown() {
+        let app = XCUIApplication()
+        app.launch()
+        app.navigationBars["NIBM Music"].buttons["Profile"].tap()
+        app.textFields["Username"].tap()
+        app.buttons["Login"].tap()
+        
+        let alertDialog = app.alerts["Missing Credentials"]
+        
+        XCTAssertTrue(alertDialog.exists)
+        
+        alertDialog.buttons["Ok"].tap()
+    }
 
     func testExample() throws {
         // UI tests must launch the application that they test.
@@ -42,17 +56,18 @@ class nibmdevelopmentoneUITests: XCTestCase {
         userNameTextField.typeText(validUsername)
         
         let passwordSecureTextField = app.secureTextFields["Password"]
+        XCTAssertTrue(passwordSecureTextField.exists)
         passwordSecureTextField.tap()
         passwordSecureTextField.typeText(validPassword)
         
         app.buttons["Login"].tap()
         
-        let downloadCell = app.tables.staticTexts["My Download"]
+        let downloadCell = app.tables.staticTexts["My Downloads"]
         
-        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: downloadCell, handler: nil)
-        
-        waitForExpectations(timeout: 10, handler: nil)
+        let exists = NSPredicate(format: "exists == 1")
 
+        expectation(for: exists, evaluatedWith: downloadCell, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.

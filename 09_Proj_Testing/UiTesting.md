@@ -41,9 +41,32 @@ func testExample() throws {
 ```
 11.  It will not work because we need to give wating time
 ```swift
-let downloadCell = app.tables.staticTexts["My Download"]
+let validPassword = "123456"
+        let validUsername = "nibm"
         
-        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: downloadCell, handler: nil)
+        let app = XCUIApplication()
+        app.launch()
+        app.navigationBars["NIBM Music"].buttons["Profile"].tap()
         
-        waitForExpectations(timeout: 10, handler: nil)
+        
+        let userNameTextField = app.textFields["Username"]
+        XCTAssertTrue(userNameTextField.exists)
+        
+        userNameTextField.tap()
+        
+        userNameTextField.typeText(validUsername)
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        XCTAssertTrue(passwordSecureTextField.exists)
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText(validPassword)
+        
+        app.buttons["Login"].tap()
+        
+        let downloadCell = app.tables.staticTexts["My Downloads"]
+        
+        let exists = NSPredicate(format: "exists == 1")
+
+        expectation(for: exists, evaluatedWith: downloadCell, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
 ```
