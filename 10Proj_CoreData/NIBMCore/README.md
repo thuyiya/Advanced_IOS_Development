@@ -89,7 +89,5 @@ extension ViewController: UITableViewDataSource {
 }
 ```
 
-after core data
 
-```swift
-```
+(Follow) [https://www.raywenderlich.com/7569-getting-started-with-core-data-tutorial]
