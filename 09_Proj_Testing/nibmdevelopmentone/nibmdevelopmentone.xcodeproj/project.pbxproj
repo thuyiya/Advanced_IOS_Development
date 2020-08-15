@@ -85,12 +85,12 @@
 			children = (
 				1F82391D24E7044A00C288BD /* AppDelegate.swift */,
 				1F82391F24E7044A00C288BD /* SceneDelegate.swift */,
-				1F82392124E7044A00C288BD /* ViewController.swift */,
 				1F82392624E7044D00C288BD /* Assets.xcassets */,
 				1F82392824E7044D00C288BD /* LaunchScreen.storyboard */,
 				1F82392B24E7044D00C288BD /* Info.plist */,
 				1F82393F24E7056400C288BD /* Calculation.swift */,
 				1F82394524E7606500C288BD /* Main.storyboard */,
+				1F82392124E7044A00C288BD /* ViewController.swift */,
 				1F82394924E7616600C288BD /* MainTableView.swift */,
 			);
 			path = nibmdevelopmentone;

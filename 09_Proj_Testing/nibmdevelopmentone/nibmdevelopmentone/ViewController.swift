@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var loadingActivity: UIActivityIndicatorView!
     @IBOutlet weak var statusLabel: UILabel!
-    let expectedUserName = "CodePro"
-    let expectedPassword = "abc123"
+    let expectedUserName = "nibm"
+    let expectedPassword = "123456"
     
     override func viewDidLoad() {
         super.viewDidLoad()
