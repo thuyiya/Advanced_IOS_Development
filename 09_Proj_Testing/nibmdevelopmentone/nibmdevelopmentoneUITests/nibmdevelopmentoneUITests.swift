@@ -25,9 +25,35 @@ class nibmdevelopmentoneUITests: XCTestCase {
 
     func testExample() throws {
         // UI tests must launch the application that they test.
+
+        let validPassword = "123456"
+        let validUsername = "nibm"
+        
         let app = XCUIApplication()
         app.launch()
+        app.navigationBars["NIBM Music"].buttons["Profile"].tap()
+        
+        
+        let userNameTextField = app.textFields["Username"]
+        XCTAssertTrue(userNameTextField.exists)
+        
+        userNameTextField.tap()
+        
+        userNameTextField.typeText(validUsername)
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText(validPassword)
+        
+        app.buttons["Login"].tap()
+        
+        let downloadCell = app.tables.staticTexts["My Download"]
+        
+        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: downloadCell, handler: nil)
+        
+        waitForExpectations(timeout: 10, handler: nil)
 
+        
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
